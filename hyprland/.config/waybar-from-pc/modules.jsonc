@@ -1,0 +1,9 @@
+{
+  "hyprland/window": {
+    "format": "{title}",
+    "rewrite": {
+      "(.*) - Google Chrome": "Google Chrome",
+      "(.*) - Visual Studio Code": "VSCode"
+    }
+  }
+}

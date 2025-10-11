@@ -1,0 +1,190 @@
+# Constants
+
+set $mod Mod4
+
+set $colour00 "#101218"
+set $colour01 "#1f222d"
+set $colour02 "#252936"
+set $colour03 "#7780a1"
+set $colour04 "#C0C5CE"
+set $colour05 "#d1d4e0"
+set $colour06 "#C9CCDB"
+set $colour07 "#ffffff"
+set $colour08 "#ee829f"
+set $colour09 "#f99170"
+set $colour0A "#ffefcc"
+set $colour0B "#a5ffe1"
+set $colour0C "#97e0ff"
+set $colour0D "#97bbf7"
+set $colour0E "#c0b7f9"
+set $colour0F "#fcc09e"
+
+# set $workspace1 "1:I"
+# set $workspace2 "2:II"
+# set $workspace3 "3:III"
+# set $workspace4 "4:IV"
+# set $workspace5 "5:V"
+# set $workspace6 "6:VI"
+# set $workspace7 "7:VII"
+# set $workspace8 "8:VIII"
+# set $workspace9 "9:IX"
+# set $workspace10 "10:X"
+
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "10"
+
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+
+
+
+# General settings
+font pango: Iosevka Nerd Font 14
+floating_modifier $mod
+focus_follows_mouse no
+# workspace_auto_back_and_forth yes
+
+# Lock the screen
+bindsym $mod+Shift+x            exec i3lock
+# Open a terminal emulator
+bindsym $mod+Return             exec alacritty
+# Open a file manager
+bindsym $mod+Shift+Return       exec nemo
+# Kill focused window
+bindsym $mod+Shift+q            kill
+# Program launcher
+bindsym $mod+d                  exec "rofi -show drun -modi window,windowcd,run,drun,ssh,keys,filebrowser,combi"
+# Window switcher
+bindsym $mod+Tab                exec "rofi -show window -modi window,windowcd,run,drun,ssh,keys,filebrowser,combi"
+# Toggle fullscreen
+bindsym $mod+f                  fullscreen toggle
+# Reload the config file
+bindsym $mod+Shift+c            reload
+# Restart i3 in-place (preserves your layout/session)
+bindsym $mod+Shift+r            restart
+# Exit i3
+bindsym $mod+Shift+e            exec "i3-nagbar -m 'End your X session?' -B 'Quit i3' 'i3-msg exit'"
+# Split horizontally/vertically
+bindsym $mod+l                  split toggle
+# bindsym $mod+h                  split h
+# bindsym $mod+v                  split v
+# Enter "resize" mode
+bindsym $mod+r                  mode "resize"
+# Toggle tiling/floating
+bindsym $mod+Shift+space        floating toggle
+# Switch focus between tiled windows and floating windows
+bindsym $mod+space              focus mode_toggle
+# Screenshot
+bindsym $mod+p                  exec "screenshot"
+bindsym $mod+Shift+p            exec "screenshot window"
+
+# Shift focus
+bindsym $mod+Left               focus left
+bindsym $mod+Down               focus down
+bindsym $mod+Up                 focus up
+bindsym $mod+Right              focus right
+
+# Move focused window around
+bindsym $mod+Shift+Left         move left
+bindsym $mod+Shift+Down         move down
+bindsym $mod+Shift+Up           move up
+bindsym $mod+Shift+Right        move right
+
+# Switch workspace
+bindsym $mod+1                  workspace $workspace1
+bindsym $mod+2                  workspace $workspace2
+bindsym $mod+3                  workspace $workspace3
+bindsym $mod+4                  workspace $workspace4
+bindsym $mod+5                  workspace $workspace5
+bindsym $mod+6                  workspace $workspace6
+bindsym $mod+7                  workspace $workspace7
+bindsym $mod+8                  workspace $workspace8
+bindsym $mod+9                  workspace $workspace9
+bindsym $mod+0                  workspace $workspace10
+
+# Move focused window ("container") to another workspace
+bindsym $mod+Shift+1            move container to workspace $workspace1
+bindsym $mod+Shift+2            move container to workspace $workspace2
+bindsym $mod+Shift+3            move container to workspace $workspace3
+bindsym $mod+Shift+4            move container to workspace $workspace4
+bindsym $mod+Shift+5            move container to workspace $workspace5
+bindsym $mod+Shift+6            move container to workspace $workspace6
+bindsym $mod+Shift+7            move container to workspace $workspace7
+bindsym $mod+Shift+8            move container to workspace $workspace8
+bindsym $mod+Shift+9            move container to workspace $workspace9
+bindsym $mod+Shift+0            move container to workspace $workspace10
+
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym Left            resize shrink width 10 px or 10 ppt
+        bindsym Right           resize grow width 10 px or 10 ppt
+        bindsym Up              resize shrink height 10 px or 10 ppt
+        bindsym Down            resize grow height 10 px or 10 ppt
+        
+        # Return to normal mode
+        bindsym Escape          mode "default"
+}
+
+
+# i3-gaps fork only
+default_border none
+# for_window [class="Alacritty"] border pixel 2
+gaps inner 5
+gaps outer 0
+
+# i3-gaps-rounded fork only
+for_window [class=".*"] border pixel 0
+border_radius 8
+
+
+# smart_gaps on
+smart_borders on
+
+# Window colours                Border          Background    Text            Indicator
+client.focused                  #ffffffaa       #ffffffaa     #ffffffaa       #8888ffaa
+client.focused_inactive         #ffffff88       #ffffff88     #ffffff88       #8888ffaa
+client.unfocused                #ffffff88       #ffffff88     #ffffff88       #8888ffaa
+client.urgent                   #ff0000aa       #ff0000aa     #ff0000aa       #ff0000aa
+
+
+
+
+# Set wallpaper with 'feh'    !! Previously set in ~/.xinitrc
+exec_always feh --bg-fill $HOME/wallpapers/lofi/umbrella.jpg
+# exec_always feh --bg-fill $HOME/wallpapers/pastel/BF9284.jpg
+
+# Start polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Start Alacritty on a new session
+exec alacritty
+# exec alacritty --hold -e neofetch # doesnt work properly. try it and see

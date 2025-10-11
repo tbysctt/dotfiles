@@ -1,0 +1,129 @@
+configuration {
+    font:                       "Iosevka Nerd Font 18";
+    show-icons:                 true;
+    icon-theme: 				"bloom";
+    drun-display-format:        "{name} [({generic})]";
+    disable-history:            false;
+    hide-scrollbar: 			true;
+	sidebar-mode: 				false;
+	hover-select: 				true;
+	// click-to-exit: true; // Not working?
+
+	display-drun: 				"Apps";
+	display-window: 			"Windows";
+	display-ssh: 				"SSH";
+}
+
+* {
+	text-color:         		#fff;
+}
+
+
+
+
+
+
+
+window {
+	fullscreen:         		true;
+	location:           		center;
+	anchor:             		center;
+	x-offset:           		0;
+    y-offset:           		0;
+	border:             		0px;
+	background-color:   		transparent;
+	
+	children:           		[dummy, mainbox];
+	// children:           		[mainbox, dummy];
+    	spacing:        		0;
+		orientation:        	horizontal;
+}
+
+/* Main container - interactive part */
+mainbox {
+	expand:             		false;
+	width: 						800px;
+	spacing:            		0px;
+  	padding:            		20px 10px;
+	background-color: 			#000000ee;
+}
+
+/* Dummy container - casts fade over rest of screen */
+dummy {
+	expand:             		true;
+  	background-color:   		#00000088;
+}
+
+
+
+
+
+
+
+
+
+inputbar {
+	children: 						[prompt, entry];
+		spacing:		   			0px;
+
+	background-color:               #ffffff20;
+	border-radius:                  8px;
+    padding:                        20px 30px;
+	margin: 						10px 20px;
+
+} prompt {
+    enabled: 						true;
+	padding: 						0px 15px 5px 0px;
+	background-color:               transparent;
+
+} entry {
+    background-color:               transparent;
+    placeholder-color:              #ffffff88;
+    expand:                         true;
+    placeholder:                    "Start typing...";
+    blink:                          true;
+}
+
+
+
+
+
+
+
+
+
+listview {
+	background-color:               transparent;
+	// columns:                        2;
+    // lines:                          6;
+	// spacing:                        10px;
+    cycle:                          true;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+element {
+    background-color:               #ffffff08;
+    orientation:                    horizontal;
+    border-radius:                  8px;
+    padding:                        10px;
+	margin: 						10px 20px;
+}
+
+element-icon {
+    size:                           38px;
+    margin:                         12px;
+    background-color:               transparent;
+}
+
+element-text {
+    expand:                         true;
+    horizontal-align:               0;
+    vertical-align:                 0.5;
+    margin:                         0px 10px 0px 10px;
+    background-color:               transparent;
+}
+
+element selected {
+    background-color:               #ffffff55;
+}

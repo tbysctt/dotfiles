@@ -1,0 +1,10 @@
+#! /bin/sh
+location='screenshots/'
+name='%Y-%m-%d %H:%M:%S'
+ext='.png'
+
+case "$1" in
+	"select") scrot "$location$name select$ext" --select --line mode=edge || exit ;;
+	"window") scrot "$location$name window$ext" --focused --border || exit ;;
+	*) scrot "$location$name screen$ext" || exit ;;
+esac
