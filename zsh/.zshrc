@@ -31,6 +31,15 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   alias chrome-no-cors='open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome_dev"'
 else
   echo "Running on Linux 🐧"
+
+  # SSH agent setup
+  if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+  fi
+  if [ ! -f "$SSH_AUTH_SOCK" ]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+  fi
+
 fi
 
 # User configuration

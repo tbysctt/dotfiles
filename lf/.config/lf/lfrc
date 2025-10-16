@@ -1,0 +1,4 @@
+# Interpreter for shell commands
+set shell zsh
+
+set hidden true
