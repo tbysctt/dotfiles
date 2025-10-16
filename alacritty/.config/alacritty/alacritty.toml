@@ -1,7 +1,5 @@
 [general]
-import = [
-	"~/.config/alacritty/catppuccin-mocha.toml"
-]
+import = ["~/.config/alacritty/catppuccin-mocha.toml"]
 
 [env]
 TERM = "alacritty"
@@ -12,6 +10,7 @@ padding.y = 5
 
 opacity = 0.9
 blur = true
+# decorations = "Buttonless"
 
 option_as_alt = "Both"
 
@@ -22,7 +21,6 @@ size = 14
 
 [keyboard]
 bindings = [
-	{ key = "Right", mods = "Alt", chars = "\u001BF" },
-	{ key = "Left", mods = "Alt", chars = "\u001BB" },
+  { key = "Right", mods = "Alt", chars = "\u001BF" },
+  { key = "Left", mods = "Alt", chars = "\u001BB" },
 ]
-
