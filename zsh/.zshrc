@@ -53,7 +53,8 @@ else
     eval `cat $HOME/.ssh/ssh-agent`
   fi
 
-
+  # Set keyboard brightness (for Arch laptop)
+  # brightnessctl --device='platform::kbd_backlight' set 1
 
 fi
 
