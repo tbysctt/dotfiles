@@ -1,5 +1,5 @@
 -- This doesn't seem to work, not 100% sure why. I've just disabled the Markdown extra so most of the rubbish disappears and I'll leave this here to come back to later if I decide to.
--- return {
+return {
 --   {
 --     "MeanderingProgrammer/render-markdown.nvim",
 --     opts = {
@@ -18,4 +18,4 @@
 --       },
 --     },
 --   },
--- }
+}
