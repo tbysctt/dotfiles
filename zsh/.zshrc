@@ -20,6 +20,9 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting aliases)
 
 source $ZSH/oh-my-zsh.sh
 
+# Add local binaries to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 if [[ "$(uname -s)" == "Darwin" ]]; then
   echo "Running on Mac 🍺"
 
@@ -101,3 +104,4 @@ export GPG_TTY=$(tty)
 
 # Source the host-specific extras if there is a file for it
 [ -f ~/.config/extra.sh ] && source ~/.config/extra.sh
+
