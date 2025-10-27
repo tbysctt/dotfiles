@@ -22,6 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Add local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.opencode/bin/opencode:$PATH"
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   echo "Running on Mac 🍺"
