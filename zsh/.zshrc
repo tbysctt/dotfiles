@@ -66,8 +66,10 @@ fi
 export VISUAL="nvim"
 export EDITOR="vim"
 
-source <(kubectl completion zsh)
-source <(fzf --zsh)
+if command -v kubectl &> /dev/null; then
+  source <(kubectl completion zsh)
+fi
+
 
 # Personal binaries
 export PATH="$PATH:$HOME/bin"
@@ -94,11 +96,14 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 # Functions
 
-function fzcd() {
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
+  function fzcd() {
     local dir
     local search_dir="${1:-$HOME}"  # Default to $HOME if no argument is provided
     dir=$(find "$search_dir" -type d | fzf) && cd "$dir"
-}
+  }
+fi
 
 # Enable GPG signing for Git commits
 export GPG_TTY=$(tty)
