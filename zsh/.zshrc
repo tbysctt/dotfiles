@@ -27,9 +27,16 @@ RPROMPT='${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
 PROMPT='%F{blue}%1~%f %# '
 
 
-# Add local binaries to PATH
+# Add personal local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.opencode/bin/opencode:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$PATH:$HOME/bin"
+
+# User configuration
+export VISUAL="nvim"
+export EDITOR="vim"
+
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
   echo "Running on Mac 🍺"
@@ -44,17 +51,10 @@ else
   echo "Running on Linux 🐧"
 fi
 
-# User configuration
-export VISUAL="nvim"
-export EDITOR="vim"
-
 if command -v kubectl &> /dev/null; then
   source <(kubectl completion zsh)
 fi
 
-
-# Personal binaries
-export PATH="$PATH:$HOME/bin"
 
 # Aliases
 alias vim=nvim
@@ -93,7 +93,7 @@ fi
 export GPG_TTY=$(tty)
 
 # Source the host-specific extras if there is a file for it
-[ -f ~/.config/extra.sh ] && source ~/.config/extra.sh
+[ -f ~/.zsh/extra.zsh ] && source ~/.zsh/extra.zsh
 
 
 
