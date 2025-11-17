@@ -9,16 +9,23 @@
 #   ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░   
 # " | lolcat
 
-DISABLE_AUTO_UPDATE="true"
-DISABLE_MAGIC_FUNCTIONS="true"
-DISABLE_COMPFIX="true"
+# Initialise the Zsh completion system, enabling tab completion for commands, arguments, filenames, and repository elements like Git branches and remotes.
+autoload -Uz compinit && compinit
 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+# Add version control support
+autoload -Uz add-zsh-hook vcs_info
+setopt prompt_subst
+add-zsh-hook precmd vcs_info
+zstyle ':vcs_info:git:*' formats '⎇ %b %u%c' # %u = unstaged changes, %c = staged changes, %b = branch name
+zstyle ':vcs_info:git*' actionformats '⎇ %b (%a) %u%c' # %a = action git is currently performing ("merge" or "rebase")
+zstyle ':vcs_info:git*' unstagedstr '*'
+zstyle ':vcs_info:git*' stagedstr '+'
+zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting aliases)
+# %n@%m = user@host
+RPROMPT='${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
+PROMPT='%F{blue}%1~%f %# '
 
-source $ZSH/oh-my-zsh.sh
 
 # Add local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
@@ -51,6 +58,7 @@ export PATH="$PATH:$HOME/bin"
 
 # Aliases
 alias vim=nvim
+alias l="ls -al"
 alias k=kubectl
 alias tf=terraform
 alias cf=codefresh
@@ -86,4 +94,10 @@ export GPG_TTY=$(tty)
 
 # Source the host-specific extras if there is a file for it
 [ -f ~/.config/extra.sh ] && source ~/.config/extra.sh
+
+
+
+# Niceties for interactive shell experience, making it similar to Fish shell.
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
 
