@@ -20,8 +20,3 @@ normal.family = "FiraCode Nerd Font"
 normal.style = "Regular"
 size = 12
 
-[keyboard]
-bindings = [
-  { key = "Right", mods = "Alt", chars = "\u001BF" },
-  { key = "Left", mods = "Alt", chars = "\u001BB" },
-]

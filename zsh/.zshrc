@@ -14,17 +14,45 @@ autoload -Uz compinit && compinit
 
 # Add version control support
 autoload -Uz add-zsh-hook vcs_info
-setopt prompt_subst
+setopt prompt_subst # Enable prompt substitution for variable expansion
 add-zsh-hook precmd vcs_info
 zstyle ':vcs_info:git:*' formats '⎇ %b %u%c' # %u = unstaged changes, %c = staged changes, %b = branch name
-zstyle ':vcs_info:git*' actionformats '⎇ %b (%a) %u%c' # %a = action git is currently performing ("merge" or "rebase")
-zstyle ':vcs_info:git*' unstagedstr '*'
-zstyle ':vcs_info:git*' stagedstr '+'
+zstyle ':vcs_info:git:*' actionformats '⎇ %b (%a) %u%c' # %a = action git is currently performing ("merge" or "rebase")
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
 
+# Enable VI mode (default is emacs mode)
+bindkey -v
+
+# Function to show VI mode in prompt
+function zle-line-init {
+  # Initialize VI_MODE for the first prompt
+  if [[ ${KEYMAP} == vicmd ]]; then
+    VI_MODE="%F{red}[N]%f"
+  else
+    VI_MODE="%F{green}[I]%f"
+  fi
+  zle reset-prompt
+}
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    VI_MODE="%F{red}[N]%f"
+  else
+    VI_MODE="%F{green}[I]%f"
+  fi
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# Initialize VI_MODE before first prompt
+VI_MODE="%F{green}[I]%f"
+
 # %n@%m = user@host
-RPROMPT='${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
 PROMPT='%F{blue}%1~%f %# '
+RPROMPT='${VI_MODE} ${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
 
 
 # Add personal local binaries to PATH
@@ -58,11 +86,20 @@ fi
 
 # Aliases
 alias vim=nvim
-alias l="ls -al"
 alias k=kubectl
 alias tf=terraform
 alias cf=codefresh
+
 alias ssh="TERM=xterm-256color ssh" # Usually remote machines don't understand the "alacritty" TERM type.
+alias diff='diff --color=always'
+
+alias l="ls -al --color=auto"
+alias ga="git add"
+alias gc="git commit"
+alias gst="git status"
+alias gsw="git switch"
+alias glo="git log --oneline --decorate --color --graph"
+
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'
 
@@ -95,9 +132,7 @@ export GPG_TTY=$(tty)
 # Source the host-specific extras if there is a file for it
 [ -f ~/.zsh/extra.zsh ] && source ~/.zsh/extra.zsh
 
-
-
 # Niceties for interactive shell experience, making it similar to Fish shell.
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
+[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
 
