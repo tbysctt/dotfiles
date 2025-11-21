@@ -74,11 +74,12 @@ To make ZSH your default shell, run the following. Note that if you use `sudo`, 
 chsh -s $(which zsh)
 ```
 
-ZSH expects that the `zsh-autosuggestions` and `zsh-syntax-highlighting` plugins are cloned to `~/.zsh/*`.
+ZSH expects that the following plugins are cloned to `~/.zsh/*`.
 
 ```sh
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.zsh/zsh-history-substring-search
 ```
 
 It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. Example snippets I put in `extra.sh` on some machines:

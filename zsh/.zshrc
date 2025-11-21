@@ -9,6 +9,10 @@
 #   ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░   
 # " | lolcat
 
+setopt HIST_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt EXTENDED_HISTORY
+
 # Initialise the Zsh completion system, enabling tab completion for commands, arguments, filenames, and repository elements like Git branches and remotes.
 autoload -Uz compinit && compinit
 
@@ -133,4 +137,5 @@ export GPG_TTY=$(tty)
 # Niceties for interactive shell experience, making it similar to Fish shell.
 [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
+[ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh # Must be sourced last
 
