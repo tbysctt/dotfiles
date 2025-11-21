@@ -22,37 +22,35 @@ zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
 
-# Enable VI mode (default is emacs mode)
+# Enable VI mode (default is emacs mode) and show when in vicmd mode
 bindkey -v
+KEYMAP_VALUE=""
 
-# Function to show VI mode in prompt
 function zle-line-init {
-  # Initialize VI_MODE for the first prompt
   if [[ ${KEYMAP} == vicmd ]]; then
-    VI_MODE="%F{red}[N]%f"
+    KEYMAP_VALUE="%F{red}[vicmd]%f"
   else
-    VI_MODE="%F{green}[I]%f"
+    KEYMAP_VALUE=""
   fi
   zle reset-prompt
 }
 
 function zle-keymap-select {
+  KEYMAP_VALUE=$KEYMAP
   if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-    VI_MODE="%F{red}[N]%f"
+    KEYMAP_VALUE="%F{red}[vicmd]%f"
   else
-    VI_MODE="%F{green}[I]%f"
+    KEYMAP_VALUE=""
   fi
   zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-# Initialize VI_MODE before first prompt
-VI_MODE="%F{green}[I]%f"
 
 # %n@%m = user@host
 PROMPT='%F{blue}%1~%f %# '
-RPROMPT='${VI_MODE} ${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
+RPROMPT='${KEYMAP_VALUE} ${vcs_info_msg_0_} %(?.%F{green}✓.%F{red}×)%f'
 
 
 # Add personal local binaries to PATH
