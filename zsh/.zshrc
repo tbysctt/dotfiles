@@ -26,8 +26,8 @@ zstyle ':vcs_info:git:*' unstagedstr '*'
 zstyle ':vcs_info:git:*' stagedstr '+'
 zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
 
-# Enable VI mode (default is emacs mode) and show when in vicmd mode
-bindkey -v
+# Explicitly set keybind mode to emacs because ZSH will use vi mode when the EDITOR env var includes "vi"
+bindkey -e
 KEYMAP_VALUE=""
 
 function zle-line-init {
