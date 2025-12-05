@@ -105,6 +105,8 @@ alias glo="git log --oneline --decorate --color --graph"
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'
 
+alias dots="vim $HOME/dotfiles"
+
 # Node Version Manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
