@@ -52,9 +52,8 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 
-# %n@%m = user@host
 PROMPT='%F{blue}%1~%f ${vcs_info_msg_0_}%# '
-RPROMPT='${KEYMAP_VALUE} %(?.%F{green}✓.%F{red}×)%f'
+RPROMPT="${KEYMAP_VALUE} %(?.%F{green}✓.%F{red}×)%f %n@%m ($(uname -s))"
 
 
 # Add personal local binaries to PATH
@@ -69,16 +68,12 @@ export EDITOR="vim"
 
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  echo "Running on Mac 🍺"
-
   # Set PATH, MANPATH, etc., for Homebrew.
   export PATH="/opt/homebrew/bin:$PATH"
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # Mac-specific aliases
   alias chrome-no-cors='open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome_dev"'
-else
-  echo "Running on Linux 🐧"
 fi
 
 if command -v kubectl &> /dev/null; then
