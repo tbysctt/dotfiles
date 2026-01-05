@@ -1,0 +1,13 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Toby Scott
+	email = toby@tobyscott.dev
+[core]
+	excludesfile = $HOME/.gitignore_global
+[init]
+	defaultBranch = main
+
