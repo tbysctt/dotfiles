@@ -112,3 +112,8 @@ Set keyboard brightness on the Lenovo laptop:
 ```sh
 brightnessctl --device='platform::kbd_backlight' set 1
 ```
+
+
+#### Git
+
+Similar to how ZSH sources `~/.zsh/extra.zsh` (which is not committed) for host-specific config, the Git config points to a `~/.gitconfig.local` file for any additional host-specific or sensitive Git config you'd like to apply, such as GPG config. Create this file to use it as it's not committed.

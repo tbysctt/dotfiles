@@ -7,7 +7,14 @@
 	name = Toby Scott
 	email = toby@tobyscott.dev
 [core]
+  editor = vim
 	excludesfile = $HOME/.gitignore_global
 [init]
 	defaultBranch = main
 
+[pull]
+  rebase = true
+
+[include]
+  # GPG key info and any sensitive (or host-specific) info should be added to a `.gitconfig.local` file.
+  path = $HOME/.gitconfig.local
