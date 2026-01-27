@@ -55,6 +55,7 @@ zle -N zle-keymap-select
 PROMPT='%F{blue}%1~%f ${vcs_info_msg_0_}%# '
 RPROMPT="${KEYMAP_VALUE} %(?.%F{green}✓.%F{red}×)%f %n@%m ($(uname -s))"
 
+export TOOLBOX_IMAGE=ghcr.io/tbysctt/toolbox:latest
 
 # Add personal local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
@@ -83,14 +84,15 @@ fi
 
 # Aliases
 alias vim=nvim
-alias k=kubectl
 alias tf=terraform
 alias cf=codefresh
+alias t=tmux
 
 alias ssh="TERM=xterm-256color ssh" # Usually remote machines don't understand the "alacritty" TERM type.
 alias diff='diff --color=always'
 
 alias l="ls -al --color=auto"
+
 alias ga="git add"
 alias gc="git commit"
 alias gst="git status"
@@ -100,7 +102,11 @@ alias glo="git log --oneline --decorate --color --graph"
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'
 
-alias dots="vim $HOME/dotfiles"
+# Use a subshell so we go back to the original directory once Neovim exits
+alias dots="(cd $HOME/dotfiles && nvim .)"
+
+alias k=kubectl
+alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOOLBOX_IMAGE --stdin=true --tty=true --pod-running-timeout=10m0s --annotations="cluster-autoscaler.kubernetes.io/safe-to-evict=true"'
 
 # Node Version Manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
