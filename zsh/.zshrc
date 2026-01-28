@@ -59,8 +59,10 @@ export TOOLBOX_IMAGE=ghcr.io/tbysctt/toolbox:latest
 
 # Add personal local binaries to PATH
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.opencode/bin/opencode:$PATH"
 export PATH="$PATH:$HOME/bin"
+
+# OpenCode
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # From the Go docs, adds "go" command to path
 export PATH=$PATH:/usr/local/go/bin
