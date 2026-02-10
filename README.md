@@ -18,6 +18,24 @@ Note that Stow's default target is actually the parent directory of the current 
 
 3. Install configurations with `stow <configuration directory name>`. For example, to install the Lazy Vim config in [lazyvim](./lazyvim/), run `stow lazyvim`.
 
+## Important notes about each config
+
+#### Neovim
+
+The Neovim config is uses the LazyVim distribution, with a few customisations, such as:
+
+- Remove massive "LAZYVIM" graphic from Dashboard
+- Show GitHub repo information on the Dashboard (requires GitHub CLI to be installed)
+- Sets conceal level to zero - This was extremely annoying when writing Markdown
+- Shows hidden and git-ignored files in the Explorer. Makes hidden files appear with "Normal" font colour, and only the git-ignored files to appear with the greyed-out font colour.
+- Shows hidden files in the Files picker, but not git-ignored files.
+- Adds some additional keymaps to make it easier to jump to the LazyVim config and healthcheck
+- Opens the Snacks Dashboard when the last buffer is deleted
+- Shows a Git Blame in ghost text on the current line
+- Installs Sidekick for AI assisted programming
+- Adds language support for JavaScript/TypeScript, Go, PHP
+- Disables inlay hints by default
+
 ## Notes for new machines
 
 ### Mac OS
@@ -50,6 +68,7 @@ mkdir -p ~/.local/share/fonts/FiraCode
 3. Copy or move the font files (e.g., .ttf or .otf) into that directory.
 
 4. Grant correct permissions if system-wide:
+
 ```sh
 sudo chown -R root: /usr/local/share/fonts/nerd-fonts/FiraCode
 sudo chmod 644 /usr/local/share/fonts/nerd-fonts/FiraCode/*
@@ -70,6 +89,7 @@ fc-list | grep -i "FiraCode"
 #### ZSH
 
 To make ZSH your default shell, run the following. Note that if you use `sudo`, it will change the default shell for the root user instead of your user.
+
 ```sh
 chsh -s $(which zsh)
 ```
@@ -85,6 +105,7 @@ git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.zsh/z
 It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. Example snippets I put in `extra.sh` on some machines:
 
 Start SSH agent:
+
 ```sh
 # # SSH agent setup I had in Arch PC's .zshrc
 # if ! pgrep -u "$USER" ssh-agent > /dev/null; then
@@ -109,10 +130,10 @@ fi
 ```
 
 Set keyboard brightness on the Lenovo laptop:
+
 ```sh
 brightnessctl --device='platform::kbd_backlight' set 1
 ```
-
 
 #### Git
 
