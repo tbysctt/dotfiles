@@ -1,54 +1,54 @@
-local icons = LazyVim.config.icons
-
-return {
-	{
-		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
-		-- opts = function(_, opts)
-		-- 	opts.options = {
-		-- 		-- section_separators = { left = "", right = "" },
-		-- 		-- component_separators = { left = "", right = "" },
-		-- 		section_separators = { left = "", right = "" },
-		-- 		component_separators = { left = "", right = "" },
-		-- 	}
-		-- 	-- opts.sections = {
-		-- 	-- 	lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-		-- 	-- }
-		-- 	table.insert(opts.sections.lualine_x, {
-		-- 		function()
-		-- 			return "😄"
-		-- 		end,
-		-- 	})
-		-- end,
-		opts = {
-			options = {
-				component_separators = "",
-				-- section_separators = { left = "", right = "" },
-			},
-			sections = {
-				lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-				lualine_c = {
-					-- LazyVim.lualine.root_dir(),
-					-- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-					{ LazyVim.lualine.pretty_path() },
-				},
-				lualine_y = {
-					{
-						"diagnostics",
-						symbols = {
-							error = icons.diagnostics.Error,
-							warn = icons.diagnostics.Warn,
-							info = icons.diagnostics.Info,
-							hint = icons.diagnostics.Hint,
-						},
-						separator = { left = "" },
-					},
-				},
-				lualine_z = {
-					{ "progress", padding = { left = 1, right = 0 } },
-					{ "location", padding = { left = 0, right = 1 }, separator = { right = "", left = "" } },
-				},
-			},
-		},
-	},
-}
+-- local icons = LazyVim.config.icons
+--
+-- return {
+-- 	{
+-- 		"nvim-lualine/lualine.nvim",
+-- 		event = "VeryLazy",
+-- 		-- opts = function(_, opts)
+-- 		-- 	opts.options = {
+-- 		-- 		-- section_separators = { left = "", right = "" },
+-- 		-- 		-- component_separators = { left = "", right = "" },
+-- 		-- 		section_separators = { left = "", right = "" },
+-- 		-- 		component_separators = { left = "", right = "" },
+-- 		-- 	}
+-- 		-- 	-- opts.sections = {
+-- 		-- 	-- 	lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+-- 		-- 	-- }
+-- 		-- 	table.insert(opts.sections.lualine_x, {
+-- 		-- 		function()
+-- 		-- 			return "😄"
+-- 		-- 		end,
+-- 		-- 	})
+-- 		-- end,
+-- 		opts = {
+-- 			options = {
+-- 				component_separators = "",
+-- 				-- section_separators = { left = "", right = "" },
+-- 			},
+-- 			sections = {
+-- 				lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+-- 				lualine_c = {
+-- 					-- LazyVim.lualine.root_dir(),
+-- 					-- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+-- 					{ LazyVim.lualine.pretty_path() },
+-- 				},
+-- 				lualine_y = {
+-- 					{
+-- 						"diagnostics",
+-- 						symbols = {
+-- 							error = icons.diagnostics.Error,
+-- 							warn = icons.diagnostics.Warn,
+-- 							info = icons.diagnostics.Info,
+-- 							hint = icons.diagnostics.Hint,
+-- 						},
+-- 						separator = { left = "" },
+-- 					},
+-- 				},
+-- 				lualine_z = {
+-- 					{ "progress", padding = { left = 1, right = 0 } },
+-- 					{ "location", padding = { left = 0, right = 1 }, separator = { right = "", left = "" } },
+-- 				},
+-- 			},
+-- 		},
+-- 	},
+-- }
