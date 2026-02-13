@@ -36,17 +36,6 @@ The Neovim config is uses the LazyVim distribution, with a few customisations, s
 - Adds language support for JavaScript/TypeScript, Go, PHP
 - Disables inlay hints by default
 
-## Notes for new machines
-
-### Mac OS
-
-```sh
-# Disable the hold key for accented alternatives
-defaults write -g ApplePressAndHoldEnabled -bool false
-```
-
-## Expectations
-
 #### Alacritty
 
 Alacritty expects the Fira Code Nerd Font to be installed and available.
@@ -138,3 +127,12 @@ brightnessctl --device='platform::kbd_backlight' set 1
 #### Git
 
 Similar to how ZSH sources `~/.zsh/extra.zsh` (which is not committed) for host-specific config, the Git config points to a `~/.gitconfig.local` file for any additional host-specific or sensitive Git config you'd like to apply, such as GPG config. Create this file to use it as it's not committed.
+
+## Notes for new machines
+
+### Mac OS
+
+```sh
+# Disable the hold key for accented alternatives
+defaults write -g ApplePressAndHoldEnabled -bool false
+```
