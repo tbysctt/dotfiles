@@ -14,10 +14,6 @@ return {
 		"folke/snacks.nvim",
 		---@type snacks.Config
 		opts = {
-			input = {
-				icon = ": ", -- Change the prompt icon here
-				icon_hl = "SnacksInputIcon", -- Optional: keep the default highlight
-			},
 			picker = {
 				sources = {
 					explorer = {
