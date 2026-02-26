@@ -42,9 +42,9 @@ return {
 	--     vim.lsp.enable("copilot")
 	--   end,
 	-- },
-	{
-		"folke/sidekick.nvim",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		opts = {},
-	},
+	-- {
+	-- 	"folke/sidekick.nvim",
+	-- 	dependencies = { "zbirenbaum/copilot.lua" },
+	-- 	opts = {},
+	-- },
 }

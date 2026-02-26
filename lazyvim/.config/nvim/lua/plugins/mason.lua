@@ -3,10 +3,7 @@ return {
 	-- 	"williamboman/mason.nvim",
 	-- 	opts = {
 	-- 		ensure_installed = {
-	-- 			"stylua",
-	-- 			"shellcheck",
-	-- 			"shfmt",
-	-- 			"flake8",
+	-- 			"copilot-language-server", -- Required for Next Edit Suggestions
 	-- 		},
 	-- 	},
 	-- },
