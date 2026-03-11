@@ -33,16 +33,16 @@ return {
 				sections = {
 					{ section = "header" },
 					{ section = "keys", gap = 1, padding = 1 },
-					{
-						pane = 2,
-						icon = " ",
-						desc = "Browse Repo",
-						padding = 1,
-						key = "b",
-						action = function()
-							Snacks.gitbrowse()
-						end,
-					},
+					-- {
+					-- 	pane = 2,
+					-- 	icon = " ",
+					-- 	desc = "Browse Repo",
+					-- 	padding = 1,
+					-- 	key = "b",
+					-- 	action = function()
+					-- 		Snacks.gitbrowse()
+					-- 	end,
+					-- },
 					function()
 						local in_git = Snacks.git.get_root() ~= nil
 						local cmds = {
@@ -67,16 +67,16 @@ return {
 							-- 	icon = " ",
 							-- 	height = 7,
 							-- },
-							{
-								icon = " ",
-								title = "Open PRs",
-								cmd = "gh pr list -L 3",
-								key = "P",
-								action = function()
-									vim.fn.jobstart("gh pr list --web", { detach = true })
-								end,
-								height = 7,
-							},
+							-- {
+							-- 	icon = " ",
+							-- 	title = "Open PRs",
+							-- 	cmd = "gh pr list -L 3",
+							-- 	key = "P",
+							-- 	action = function()
+							-- 		vim.fn.jobstart("gh pr list --web", { detach = true })
+							-- 	end,
+							-- 	height = 7,
+							-- },
 							{
 								icon = " ",
 								title = "Git Status",
