@@ -1,4 +1,4 @@
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
@@ -155,4 +155,4 @@ go-experiment() {
   vim .
 }
 
-zprof
+# zprof
