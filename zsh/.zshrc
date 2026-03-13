@@ -1,20 +1,18 @@
-# echo "
-#  █     █░▓█████  ██▓     ▄████▄   ▒█████   ███▄ ▄███▓▓█████ 
-# ▓█░ █ ░█░▓█   ▀ ▓██▒    ▒██▀ ▀█  ▒██▒  ██▒▓██▒▀█▀ ██▒▓█   ▀ 
-# ▒█░ █ ░█ ▒███   ▒██░    ▒▓█    ▄ ▒██░  ██▒▓██    ▓██░▒███   
-# ░█░ █ ░█ ▒▓█  ▄ ▒██░    ▒▓▓▄ ▄██▒▒██   ██░▒██    ▒██ ▒▓█  ▄ 
-# ░░██▒██▓ ░▒████▒░██████▒▒ ▓███▀ ░░ ████▓▒░▒██▒   ░██▒░▒████▒
-# ░ ▓░▒ ▒  ░░ ▒░ ░░ ▒░▓  ░░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒░   ░  ░░░ ▒░ ░
-#   ▒ ░ ░   ░ ░  ░░ ░ ▒  ░  ░  ▒     ░ ▒ ▒░ ░  ░      ░ ░ ░  ░
-#   ░   ░     ░     ░ ░   ░        ░ ░ ░ ▒  ░      ░      ░   
-# " | lolcat
+zmodload zsh/zprof
 
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt EXTENDED_HISTORY
 
 # Initialise the Zsh completion system, enabling tab completion for commands, arguments, filenames, and repository elements like Git branches and remotes.
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+
+# Check the cache once a day rather than every time
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
+  compinit -C
+else
+  compinit
+fi
 
 # Add version control support
 autoload -Uz add-zsh-hook vcs_info
@@ -118,8 +116,7 @@ alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOO
 
 # Node Version Manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, but for the sake of initial shell startup time, it skips checking for any .nvmrc file to auto-use a particular version
 
 # Python shit
 # export PYENV_ROOT="$HOME/.pyenv"
@@ -157,3 +154,5 @@ go-experiment() {
   touch main.go
   vim .
 }
+
+zprof
