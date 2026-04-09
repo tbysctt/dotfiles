@@ -20,13 +20,18 @@ return {
 				sources = {
 					explorer = {
 						hidden = true,
-						ignored = true,
+						-- ignored = true,
+						layout = { preset = "default", focus = "list" }, -- "default" preset in Snacks pickers is a centered floating window
+						jump = { close = true }, -- This ensures it behaves like a standard picker (closes on select)
 					},
 					files = {
 						hidden = true,
 						ignored = false,
 					},
 				},
+			},
+			explorer = {
+				-- replace_netrw = false, -- This stops it from hijacking the directory view on startup
 			},
 			dashboard = {
 				preset = {
