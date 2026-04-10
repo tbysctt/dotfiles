@@ -31,6 +31,7 @@ return {
 				},
 			},
 			explorer = {
+				-- enabled = false,
 				-- replace_netrw = false, -- This stops it from hijacking the directory view on startup
 			},
 			dashboard = {
