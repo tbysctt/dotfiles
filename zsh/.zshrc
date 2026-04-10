@@ -87,7 +87,7 @@ fi
 
 
 # Aliases
-alias vim=nvim
+alias nv=nvim
 alias tf=terraform
 alias cf=codefresh
 alias t=tmux
@@ -109,7 +109,7 @@ alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wa
 alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'
 
 # Use a subshell so we go back to the original directory once Neovim exits
-alias dots="(cd $HOME/dotfiles && nvim .)"
+alias dots="(cd $HOME/dotfiles && nvim)"
 
 alias k=kubectl
 alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOOLBOX_IMAGE --stdin=true --tty=true --pod-running-timeout=10m0s --annotations="cluster-autoscaler.kubernetes.io/safe-to-evict=true"'
