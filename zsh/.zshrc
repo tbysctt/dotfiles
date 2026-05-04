@@ -101,9 +101,9 @@ alias l="ls -al --color=auto"
 
 alias ga="git add"
 alias gc="git commit"
-alias gst="git status"
+alias gst="git status -uall --short --branch" # uall shows all files inside untracked directories
 alias gsw="git switch"
-alias glo="git log --oneline --decorate --color --graph"
+alias glo='git log --pretty=format:"%C(yellow)%h%Creset %C(green)%an%Creset %C(blue)(%cr)%Creset %s" --date=format:"%a %d-%m-%Y %H:%M" --graph'
 
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'

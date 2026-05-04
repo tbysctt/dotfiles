@@ -47,13 +47,13 @@ return {
 							{
 								icon = " ",
 								title = "Git Status",
-								cmd = "git status",
+								cmd = "git status -uall --short --branch",
 								height = 10,
 							},
 							{
 								icon = " ",
 								title = "Git log",
-								cmd = "git log --oneline --graph --all",
+								cmd = 'git log --pretty=format:"%C(yellow)%h%Creset %C(green)%an%Creset %C(blue)(%cr)%Creset %s" --date=format:"%a %d-%m-%Y %H:%M" -n 5',
 								height = 10,
 							},
 						}
