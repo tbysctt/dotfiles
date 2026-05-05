@@ -1,5 +1,7 @@
 # zmodload zsh/zprof
 
+set -o interactive_comments
+
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt EXTENDED_HISTORY
