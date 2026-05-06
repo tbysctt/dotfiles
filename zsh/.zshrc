@@ -149,12 +149,21 @@ export GPG_TTY=$(tty)
 [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
 [ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh # Must be sourced last
 
-# Scripts to setup an experiment environment in a temporary directory
+# Scripts to setup experiment environments in a temporary directory
+
 go-experiment() {
   cd `mktemp -d`
   go mod init example.com/go-experiment
+  git init
   touch main.go
-  vim .
+  nv
+}
+
+py-experiment() {
+  cd `mktemp -d`
+  poetry new . --name "experiment"
+  git init
+  nv
 }
 
 # zprof
