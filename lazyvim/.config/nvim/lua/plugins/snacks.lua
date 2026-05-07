@@ -61,6 +61,20 @@ return {
 				sections = {
 					{ section = "header" },
 					function()
+						local root = Snacks.git.get_root() or vim.uv.cwd() or vim.fn.getcwd()
+						local cwd = vim.uv.cwd() or vim.fn.getcwd()
+						return {
+							align = "center",
+							padding = { 0, 1 },
+							text = {
+								{ "Root: ", hl = "comment" },
+								{ root, hl = "special" },
+								{ "\nCWD:  ", hl = "comment" },
+								{ cwd, hl = "special" },
+							},
+						}
+					end,
+					function()
 						local in_git = Snacks.git.get_root() ~= nil
 						-- Terminal sections default to height=10; that reserves 10 rows even when git output is short,
 						-- which reads as a huge gap before the next section. Tune heights to match typical output.
