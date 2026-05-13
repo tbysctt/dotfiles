@@ -116,6 +116,17 @@ alias dots="(cd $HOME/dotfiles && nvim)"
 alias k=kubectl
 alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOOLBOX_IMAGE --stdin=true --tty=true --pod-running-timeout=10m0s --annotations="cluster-autoscaler.kubernetes.io/safe-to-evict=true"'
 
+
+# Yazi shell wrapper that provides the ability to change the CWD when exiting Yazi. Exit with "q" to change, exit with "Q" to not change.
+# See: https://github.com/yazi-rs/yazi-rs.github.io/blob/main/versioned_docs/version-26.5.6/quick-start.md?plain=1#L19
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	command rm -f -- "$tmp"
+}
+
 # Node Version Manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, but for the sake of initial shell startup time, it skips checking for any .nvmrc file to auto-use a particular version
