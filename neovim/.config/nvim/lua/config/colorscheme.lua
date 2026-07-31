@@ -4,7 +4,7 @@ require("catppuccin").setup({
 		blink_cmp = true,
 		which_key = true,
 		snacks = { enabled = true },
-	}
+	},
 })
 
 vim.cmd.colorscheme("catppuccin")

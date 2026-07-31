@@ -12,8 +12,8 @@ vim.pack.add({
 
 	{ src = gh("L3MON4D3/LuaSnip"), name = "luasnip" },
 
-	{ src = gh("Saghen/blink.cmp"), version = vim.version.range("1")}, -- Pinned to v1.x for pre-built fuzzy binary
-	
+	{ src = gh("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
+
 	gh("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
 
 	{ src = gh("mrcjkb/rustaceanvim"), version = vim.version.range("5") },
@@ -31,7 +31,7 @@ vim.pack.add({
 	gh("nvim-lualine/lualine.nvim"),
 
 	gh("windwp/nvim-autopairs"),
-	
+
 	gh("nvim-neotest/nvim-nio"),
 	gh("nvim-neotest/neotest"),
 	gh("nvim-neotest/neotest-python"),
