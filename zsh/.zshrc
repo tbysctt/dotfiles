@@ -90,6 +90,7 @@ fi
 
 # Aliases
 alias nv=nvim
+alias lazyvim="NVIM_APPNAME=lazyvim nvim"
 alias tf=terraform
 alias cf=codefresh
 alias t=tmux

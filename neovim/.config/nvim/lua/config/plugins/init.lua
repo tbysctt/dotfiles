@@ -1,0 +1,6 @@
+require("config.plugins.completion")
+require("config.plugins.lsp")
+require("config.plugins.ui")
+require("config.plugins.picker")
+require("config.plugins.autopairs")
+require("config.plugins.conform")
