@@ -1,13 +1,17 @@
 local ts = require("nvim-treesitter")
 
 local ensure_installed = {
-    "lua",
+	"lua",
 	"go",
 	"python",
 	"typescript",
 	"tsx",
 	"javascript",
 	"rust",
+	"php",
+	"phpdoc",
+	"hcl",
+	"terraform",
 	"json",
 	"yaml",
 	"markdown",

@@ -45,7 +45,7 @@ vim.lsp.config("gopls", {
 	},
 })
 
--- TypeScript (native TS7, launched via `tsc --lsp --stdio`)
+-- TypeScript
 
 vim.lsp.config("tsc", {
 	cmd = { "tsc", "--lsp", "--stdio" },
@@ -63,7 +63,20 @@ vim.lsp.config("ruff", {
 	},
 })
 
-vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff" })
+-- PHP
+
+vim.lsp.config("intelephense", {
+	settings = {
+		intelephense = {
+			telemetry = { enabled = false },
+		},
+	},
+})
+
+-- Terraform uses terraformls defaults from nvim-lspconfig.
+-- Rust is handled by rustaceanvim (auto-starts rust-analyzer).
+
+vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff", "intelephense", "terraformls" })
 
 map("n", "K", vim.lsp.buf.hover, { silent = true, desc = "LSP hover" })
 

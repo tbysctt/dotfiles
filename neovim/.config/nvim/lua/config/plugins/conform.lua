@@ -22,6 +22,9 @@ require("conform").setup({
 		go = { "goimports", "gofmt" },
 		rust = { "rustfmt" },
 		python = { "ruff_organize_imports", "ruff_format" },
+		php = { "pint", "php_cs_fixer", stop_after_first = true },
+		terraform = { "terraform_fmt" },
+		["terraform-vars"] = { "terraform_fmt" },
 
 		javascript = biome_or({ "prettier" }),
 		javascriptreact = biome_or({ "prettier" }),
