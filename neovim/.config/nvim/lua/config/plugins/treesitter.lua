@@ -1,7 +1,7 @@
 local ts = require("nvim-treesitter")
 
 local ensure_installed = {
-	"lua",
+    "lua",
 	"go",
 	"python",
 	"typescript",
@@ -31,7 +31,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		end
 
 		pcall(vim.treesitter.start, event.buf, lang)
-		vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 		vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })

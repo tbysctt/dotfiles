@@ -29,6 +29,10 @@
       "rev": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
+    "mini.comment": {
+      "rev": "27a29d6b949b9497f80a0a03421e89fed71d8c37",
+      "src": "https://github.com/echasnovski/mini.comment"
+    },
     "mini.icons": {
       "rev": "98faae31e9be1cc054ae63485e58ceb185efcad0",
       "src": "https://github.com/echasnovski/mini.icons"
@@ -65,10 +69,6 @@
       "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "rustaceanvim": {
       "rev": "e9c5aaba16fead831379d5f44617547a90b913c7",

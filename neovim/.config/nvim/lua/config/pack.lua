@@ -7,8 +7,8 @@ end
 vim.pack.add({
 	{ src = gh("catppuccin/nvim"), name = "catppuccin" },
 
-	gh("nvim-lua/plenary.nvim"),
 	gh("echasnovski/mini.icons"),
+	gh("echasnovski/mini.comment"),
 
 	{ src = gh("L3MON4D3/LuaSnip"), name = "luasnip" },
 

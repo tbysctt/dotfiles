@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 
-require("gitsigns").setup({})
+require("gitsigns").setup({
+    current_line_blame = true
+})
 
 map("n", "]c", function()
 	require("gitsigns").next_hunk()
@@ -19,7 +21,7 @@ map("n", "<leader>hr", function()
 end, { desc = "Reset hunk" })
 
 map("n", "<leader>hp", function()
-	require("gitsigns").preview_hunk()
+    require("gitsigns").preview_hunk()
 end, { desc = "Preview hunk" })
 
 map("n", "<leader>hu", function()
@@ -29,6 +31,10 @@ end, { desc = "Unstage hunk" })
 map("n", "<leader>gb", function()
 	require("gitsigns").blame_line({ full = true })
 end, { desc = "Blame line" })
+
+map("n", "<leader>gB", function()
+	require("gitsigns").toggle_current_line_blame()
+end, { silent = true, desc = "Toggle blame" })
 
 require("grug-far").setup({})
 

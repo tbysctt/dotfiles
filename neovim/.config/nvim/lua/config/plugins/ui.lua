@@ -34,6 +34,8 @@ wk.setup({
 
 require("todo-comments").setup({})
 
+vim.keymap.set("n", "<leader>qt", "<cmd>TodoQuickFix<CR>", { silent = true, desc = "Todo list" })
+
 require("lualine").setup({
 	options = {
 		theme = "catppuccin-mocha",
