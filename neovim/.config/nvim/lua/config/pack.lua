@@ -20,7 +20,7 @@ vim.pack.add({
 
 	gh("stevearc/conform.nvim"),
 
-	{ src = gh("nvim-treesitter/nvim-treesitter"), version = vim.version.range("main") },
+	{ src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
 
 	gh("lewis6991/gitsigns.nvim"),
 	gh("MagicDuck/grug-far.nvim"),
@@ -29,8 +29,6 @@ vim.pack.add({
 	gh("folke/which-key.nvim"),
 	gh("folke/snacks.nvim"),
 	gh("nvim-lualine/lualine.nvim"),
-
-	gh("windwp/nvim-autopairs"),
 
 	gh("nvim-neotest/nvim-nio"),
 	gh("nvim-neotest/neotest"),

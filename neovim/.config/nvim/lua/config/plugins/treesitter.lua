@@ -2,22 +2,31 @@ local ts = require("nvim-treesitter")
 
 local ensure_installed = {
 	"lua",
+	"go",
+	"python",
+	"typescript",
+	"tsx",
+	"javascript",
+	"rust",
+	"json",
+	"yaml",
+	"markdown",
+	"html",
+	"vim",
+	"vimdoc",
 }
 
 ts.install(ensure_installed)
 
-local filetype_to_lang = {
-	typescriptreact = "tsx",
-	javascriptreact = "javascript",
-}
+vim.treesitter.language.register("tsx", "typescriptreact")
+vim.treesitter.language.register("javascript", "javascriptreact")
 
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
 	callback = function(event)
-		local ft = vim.bo[event.buf].filetype
-		local lang = filetype_to_lang[ft] or ft
+		local lang = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
 
-		if not pcall(vim.treesitter.language.add, lang) then
+		if not lang or not pcall(vim.treesitter.language.add, lang) then
 			return
 		end
 
