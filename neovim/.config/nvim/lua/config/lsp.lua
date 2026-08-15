@@ -73,12 +73,27 @@ vim.lsp.config("intelephense", {
 	},
 })
 
+-- YAML
+
+vim.lsp.config("yamlls", {
+	settings = {
+		yaml = {
+			format = { enable = false }, -- conform.nvim handles formatting
+			validate = true,
+			hover = true,
+			completion = true,
+			schemaStore = { enable = true },
+		},
+	},
+})
+
 -- Terraform uses terraformls defaults from nvim-lspconfig.
 -- Rust is handled by rustaceanvim (auto-starts rust-analyzer).
 
-vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff", "intelephense", "terraformls" })
+vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "terraformls" })
 
 map("n", "K", vim.lsp.buf.hover, { silent = true, desc = "LSP hover" })
+map("n", "gK", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
 
 map("n", "gd", function()
 	Snacks.picker.lsp_definitions()
@@ -90,21 +105,34 @@ map("n", "gri", function()
 	Snacks.picker.lsp_implementations()
 end, { silent = true, desc = "Go to implementation" })
 map("n", "grr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
+map("n", "<leader>cr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
 map("n", "gr", function()
 	Snacks.picker.lsp_references()
 end, { silent = true, desc = "References" })
 map("n", "gy", function()
 	Snacks.picker.lsp_type_definitions()
 end, { silent = true, desc = "Go to type definition" })
-map("n", "<leader>ca", function()
-	Snacks.picker.actions()
-end, { silent = true, desc = "Code actions" })
+map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, desc = "Code actions" })
+map("n", "<leader>ci", function()
+	Snacks.picker.lsp_incoming_calls()
+end, { silent = true, desc = "Incoming calls" })
+map("n", "<leader>co", function()
+	Snacks.picker.lsp_outgoing_calls()
+end, { silent = true, desc = "Outgoing calls" })
 
 map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
 map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+map("n", "<leader>cd", vim.diagnostic.open_float, { silent = true, desc = "Line diagnostics" })
 map("n", "<leader>ds", function()
 	Snacks.picker.diagnostics()
 end, { silent = true, desc = "Diagnostics" })
+
+map("n", "<leader>ss", function()
+	Snacks.picker.lsp_symbols()
+end, { silent = true, desc = "Document symbols" })
+map("n", "<leader>sS", function()
+	Snacks.picker.lsp_workspace_symbols()
+end, { silent = true, desc = "Workspace symbols" })
 
 map("n", "<leader>uH", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
