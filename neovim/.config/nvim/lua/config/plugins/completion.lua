@@ -24,12 +24,11 @@ require("blink.cmp").setup({
 			},
 		},
 		accept = {
-			-- Automatically insert brackets when completing a function/method
 			auto_brackets = { enabled = true },
 		},
 	},
 
-	snippets = { preset = "luasnip" },
+	snippets = { preset = "default" },
 
 	sources = {
 		default = { "lsp", "snippets", "path", "buffer" },
@@ -37,7 +36,6 @@ require("blink.cmp").setup({
 
 	fuzzy = {
 		implementation = "rust",
-		-- implementation = "lua",
 	},
 
 	signature = { enabled = true, window = { border = "single" } },

@@ -9,7 +9,7 @@ map("n", "<leader><space>", function()
 	Snacks.picker.files()
 end, { desc = "Files" })
 
-map("n", "<leader>b", function()
+map("n", "<leader>bb", function()
 	Snacks.picker.buffers()
 end, { silent = true, desc = "Buffers" })
 

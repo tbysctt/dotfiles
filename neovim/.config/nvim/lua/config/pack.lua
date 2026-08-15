@@ -9,8 +9,7 @@ vim.pack.add({
 
 	gh("echasnovski/mini.icons"),
 	gh("echasnovski/mini.comment"),
-
-	{ src = gh("L3MON4D3/LuaSnip"), name = "luasnip" },
+	gh("folke/ts-comments.nvim"),
 
 	{ src = gh("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
 
@@ -20,7 +19,7 @@ vim.pack.add({
 
 	gh("stevearc/conform.nvim"),
 
-	{ src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+	{ src = gh("nvim-treesitter/nvim-treesitter"), name = "nvim-treesitter", version = "main" },
 
 	gh("lewis6991/gitsigns.nvim"),
 	gh("MagicDuck/grug-far.nvim"),

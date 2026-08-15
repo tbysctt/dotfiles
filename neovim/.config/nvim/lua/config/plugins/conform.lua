@@ -19,7 +19,7 @@ require("conform").setup({
 		markdown = { "prettier" },
 
 		lua = { "stylua" },
-		go = { "goimports", "gofmt" },
+		go = { "goimports", "gofumpt" },
 		rust = { "rustfmt" },
 		python = { "ruff_organize_imports", "ruff_format" },
 		php = { "pint", "php_cs_fixer", stop_after_first = true },

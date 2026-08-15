@@ -1,10 +1,10 @@
 local Snacks = require("snacks")
-local map = vim.keymap.set
+local map = Snacks.keymap.set
 
 vim.diagnostic.config({
 	virtual_text = false,
 	virtual_lines = { current_line = true },
-	update_in_insert = true,
+	update_in_insert = false,
 	float = {
 		border = "rounded",
 		source = true,
@@ -53,7 +53,7 @@ vim.lsp.config("tsc", {
 	root_markers = { "tsconfig.json", "package.json", ".git" },
 })
 
--- Python
+-- Python (Ruff for lint/organize; basedpyright for types when installed)
 
 vim.lsp.config("ruff", {
 	init_options = {
@@ -90,33 +90,56 @@ vim.lsp.config("yamlls", {
 -- Terraform uses terraformls defaults from nvim-lspconfig.
 -- Rust is handled by rustaceanvim (auto-starts rust-analyzer).
 
-vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "terraformls" })
+local servers = { "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "terraformls" }
+if vim.fn.executable("basedpyright-langserver") == 1 or vim.fn.executable("basedpyright") == 1 then
+	servers[#servers + 1] = "basedpyright"
+end
+vim.lsp.enable(servers)
 
-map("n", "K", vim.lsp.buf.hover, { silent = true, desc = "LSP hover" })
-map("n", "gK", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
-map("i", "<C-k>", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
+-- Align with Neovim 0.11+ gr* defaults; use Snacks pickers where useful.
+-- grn = rename (stock), gra = code action (stock), grr = references, gri = implementation
+
+map("n", "K", vim.lsp.buf.hover, {
+	lsp = { method = "textDocument/hover" },
+	desc = "LSP hover",
+})
+map("n", "gK", vim.lsp.buf.signature_help, {
+	lsp = { method = "textDocument/signatureHelp" },
+	desc = "Signature help",
+})
+map("i", "<C-k>", vim.lsp.buf.signature_help, {
+	lsp = { method = "textDocument/signatureHelp" },
+	desc = "Signature help",
+})
 
 map("n", "gd", function()
 	Snacks.picker.lsp_definitions()
-end, { silent = true, desc = "Go to definition" })
+end, { lsp = { method = "textDocument/definition" }, desc = "Go to definition" })
 map("n", "gD", function()
 	Snacks.picker.lsp_declarations()
-end, { silent = true, desc = "Go to declaration" })
+end, { lsp = { method = "textDocument/declaration" }, desc = "Go to declaration" })
 map("n", "gri", function()
 	Snacks.picker.lsp_implementations()
-end, { silent = true, desc = "Go to implementation" })
-map("n", "grr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
-map("n", "<leader>cr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
-map("n", "<leader>cR", function()
-	Snacks.rename.rename_file()
-end, { silent = true, desc = "Rename file" })
-map("n", "gr", function()
+end, { lsp = { method = "textDocument/implementation" }, desc = "Go to implementation" })
+map("n", "grr", function()
 	Snacks.picker.lsp_references()
-end, { silent = true, desc = "References" })
+end, { lsp = { method = "textDocument/references" }, desc = "References", nowait = true })
 map("n", "gy", function()
 	Snacks.picker.lsp_type_definitions()
-end, { silent = true, desc = "Go to type definition" })
-map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, desc = "Code actions" })
+end, { lsp = { method = "textDocument/typeDefinition" }, desc = "Go to type definition" })
+
+map("n", "<leader>cr", vim.lsp.buf.rename, {
+	lsp = { method = "textDocument/rename" },
+	desc = "Rename symbol",
+})
+map("n", "<leader>cR", function()
+	Snacks.rename.rename_file()
+end, { desc = "Rename file" })
+
+map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {
+	lsp = { method = "textDocument/codeAction" },
+	desc = "Code actions",
+})
 map({ "n", "v" }, "<leader>cA", function()
 	vim.lsp.buf.code_action({
 		apply = true,
@@ -125,7 +148,7 @@ map({ "n", "v" }, "<leader>cA", function()
 			diagnostics = {},
 		},
 	})
-end, { silent = true, desc = "Source action" })
+end, { lsp = { method = "textDocument/codeAction" }, desc = "Source action" })
 map("n", "<leader>co", function()
 	vim.lsp.buf.code_action({
 		apply = true,
@@ -134,25 +157,32 @@ map("n", "<leader>co", function()
 			diagnostics = {},
 		},
 	})
-end, { silent = true, desc = "Organize imports" })
-map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { silent = true, desc = "Run codelens" })
-map("n", "<leader>cC", vim.lsp.codelens.refresh, { silent = true, desc = "Refresh codelens" })
+end, { lsp = { method = "textDocument/codeAction" }, desc = "Organize imports" })
+
+map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, {
+	lsp = { method = "textDocument/codeLens" },
+	desc = "Run codelens",
+})
+map("n", "<leader>cC", vim.lsp.codelens.refresh, {
+	lsp = { method = "textDocument/codeLens" },
+	desc = "Refresh codelens",
+})
 map("n", "<leader>cL", function()
 	Snacks.picker.lsp_config()
-end, { silent = true, desc = "LSP info" })
+end, { desc = "LSP info" })
 map("n", "<leader>cli", function()
 	Snacks.picker.lsp_incoming_calls()
-end, { silent = true, desc = "Incoming calls" })
+end, { lsp = { method = "textDocument/prepareCallHierarchy" }, desc = "Incoming calls" })
 map("n", "<leader>clo", function()
 	Snacks.picker.lsp_outgoing_calls()
-end, { silent = true, desc = "Outgoing calls" })
+end, { lsp = { method = "textDocument/prepareCallHierarchy" }, desc = "Outgoing calls" })
 
-map("n", "]]", function()
-	Snacks.words.jump(vim.v.count1)
-end, { silent = true, desc = "Next reference" })
-map("n", "[[", function()
-	Snacks.words.jump(-vim.v.count1)
-end, { silent = true, desc = "Prev reference" })
+map("n", "<A-n>", function()
+	Snacks.words.jump(vim.v.count1, true)
+end, { desc = "Next reference" })
+map("n", "<A-p>", function()
+	Snacks.words.jump(-vim.v.count1, true)
+end, { desc = "Prev reference" })
 
 local function diagnostic_goto(next, severity)
 	return function()
@@ -164,24 +194,24 @@ local function diagnostic_goto(next, severity)
 	end
 end
 
-map("n", "]d", diagnostic_goto(true), { silent = true, desc = "Next diagnostic" })
-map("n", "[d", diagnostic_goto(false), { silent = true, desc = "Prev diagnostic" })
-map("n", "]e", diagnostic_goto(true, "ERROR"), { silent = true, desc = "Next error" })
-map("n", "[e", diagnostic_goto(false, "ERROR"), { silent = true, desc = "Prev error" })
-map("n", "]w", diagnostic_goto(true, "WARN"), { silent = true, desc = "Next warning" })
-map("n", "[w", diagnostic_goto(false, "WARN"), { silent = true, desc = "Prev warning" })
-map("n", "<leader>cd", vim.diagnostic.open_float, { silent = true, desc = "Line diagnostics" })
+map("n", "]d", diagnostic_goto(true), { desc = "Next diagnostic" })
+map("n", "[d", diagnostic_goto(false), { desc = "Prev diagnostic" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next error" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev error" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next warning" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev warning" })
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 map("n", "<leader>ds", function()
 	Snacks.picker.diagnostics()
-end, { silent = true, desc = "Diagnostics" })
+end, { desc = "Diagnostics" })
 
 map("n", "<leader>ss", function()
 	Snacks.picker.lsp_symbols()
-end, { silent = true, desc = "Document symbols" })
+end, { lsp = { method = "textDocument/documentSymbol" }, desc = "Document symbols" })
 map("n", "<leader>sS", function()
 	Snacks.picker.lsp_workspace_symbols()
-end, { silent = true, desc = "Workspace symbols" })
+end, { lsp = { method = "workspace/symbol" }, desc = "Workspace symbols" })
 
 map("n", "<leader>uH", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { silent = true, desc = "Toggle inlay hints" })
+end, { desc = "Toggle inlay hints" })
