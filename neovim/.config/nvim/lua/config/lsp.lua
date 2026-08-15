@@ -90,7 +90,7 @@ vim.lsp.config("yamlls", {
 -- Terraform uses terraformls defaults from nvim-lspconfig.
 -- Rust is handled by rustaceanvim (auto-starts rust-analyzer).
 
-local servers = { "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "terraformls" }
+local servers = { "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "terraformls", "tailwindcss" }
 if vim.fn.executable("basedpyright-langserver") == 1 or vim.fn.executable("basedpyright") == 1 then
 	servers[#servers + 1] = "basedpyright"
 end
