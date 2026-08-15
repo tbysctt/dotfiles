@@ -94,6 +94,7 @@ vim.lsp.enable({ "lua_ls", "gopls", "tsc", "ruff", "intelephense", "yamlls", "te
 
 map("n", "K", vim.lsp.buf.hover, { silent = true, desc = "LSP hover" })
 map("n", "gK", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
+map("i", "<C-k>", vim.lsp.buf.signature_help, { silent = true, desc = "Signature help" })
 
 map("n", "gd", function()
 	Snacks.picker.lsp_definitions()
@@ -106,6 +107,9 @@ map("n", "gri", function()
 end, { silent = true, desc = "Go to implementation" })
 map("n", "grr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
 map("n", "<leader>cr", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
+map("n", "<leader>cR", function()
+	Snacks.rename.rename_file()
+end, { silent = true, desc = "Rename file" })
 map("n", "gr", function()
 	Snacks.picker.lsp_references()
 end, { silent = true, desc = "References" })
@@ -113,15 +117,59 @@ map("n", "gy", function()
 	Snacks.picker.lsp_type_definitions()
 end, { silent = true, desc = "Go to type definition" })
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { silent = true, desc = "Code actions" })
-map("n", "<leader>ci", function()
+map({ "n", "v" }, "<leader>cA", function()
+	vim.lsp.buf.code_action({
+		apply = true,
+		context = {
+			only = { "source" },
+			diagnostics = {},
+		},
+	})
+end, { silent = true, desc = "Source action" })
+map("n", "<leader>co", function()
+	vim.lsp.buf.code_action({
+		apply = true,
+		context = {
+			only = { "source.organizeImports" },
+			diagnostics = {},
+		},
+	})
+end, { silent = true, desc = "Organize imports" })
+map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, { silent = true, desc = "Run codelens" })
+map("n", "<leader>cC", vim.lsp.codelens.refresh, { silent = true, desc = "Refresh codelens" })
+map("n", "<leader>cL", function()
+	Snacks.picker.lsp_config()
+end, { silent = true, desc = "LSP info" })
+map("n", "<leader>cli", function()
 	Snacks.picker.lsp_incoming_calls()
 end, { silent = true, desc = "Incoming calls" })
-map("n", "<leader>co", function()
+map("n", "<leader>clo", function()
 	Snacks.picker.lsp_outgoing_calls()
 end, { silent = true, desc = "Outgoing calls" })
 
-map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
-map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+map("n", "]]", function()
+	Snacks.words.jump(vim.v.count1)
+end, { silent = true, desc = "Next reference" })
+map("n", "[[", function()
+	Snacks.words.jump(-vim.v.count1)
+end, { silent = true, desc = "Prev reference" })
+
+local function diagnostic_goto(next, severity)
+	return function()
+		vim.diagnostic.jump({
+			count = (next and 1 or -1) * vim.v.count1,
+			severity = severity and vim.diagnostic.severity[severity] or nil,
+			float = true,
+		})
+	end
+end
+
+map("n", "]d", diagnostic_goto(true), { silent = true, desc = "Next diagnostic" })
+map("n", "[d", diagnostic_goto(false), { silent = true, desc = "Prev diagnostic" })
+map("n", "]e", diagnostic_goto(true, "ERROR"), { silent = true, desc = "Next error" })
+map("n", "[e", diagnostic_goto(false, "ERROR"), { silent = true, desc = "Prev error" })
+map("n", "]w", diagnostic_goto(true, "WARN"), { silent = true, desc = "Next warning" })
+map("n", "[w", diagnostic_goto(false, "WARN"), { silent = true, desc = "Prev warning" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { silent = true, desc = "Line diagnostics" })
 map("n", "<leader>ds", function()
 	Snacks.picker.diagnostics()
