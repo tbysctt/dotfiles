@@ -6,7 +6,6 @@ vim.g.maplocalleader = "\\"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.autoindent = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
@@ -15,6 +14,11 @@ vim.opt.tabstop = 4
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.inccommand = "split"
+
+vim.opt.termguicolors = true
+vim.opt.breakindent = true
+vim.opt.smartindent = true
+vim.opt.linebreak = true
 
 vim.opt.cursorline = true
 vim.opt.list = true
@@ -32,7 +36,6 @@ vim.opt.splitright = true
 vim.opt.winminwidth = 5
 
 vim.opt.clipboard = "unnamedplus"
-vim.opt.mouse = "a"
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.timeoutlen = 300
