@@ -117,6 +117,31 @@ alias dots="(cd $HOME/dotfiles && nvim)"
 alias k=kubectl
 alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOOLBOX_IMAGE --stdin=true --tty=true --pod-running-timeout=10m0s --annotations="cluster-autoscaler.kubernetes.io/safe-to-evict=true"'
 
+FZF_CD_IGNORE=(node_modules .git .venv venv __pycache__ dist build target .next .cache)
+
+function cd_fzf() {
+    local search_dir="${1:-.}"
+    local max_depth="${2:-}"
+    local exclude_args=()
+    for pattern in "${FZF_CD_IGNORE[@]}"; do
+        exclude_args+=(--exclude "$pattern")
+    done
+    local depth_args=()
+    [[ -n "$max_depth" ]] && depth_args=(--max-depth "$max_depth")
+
+    local selected_dir
+    selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" \
+        | fzf +m --height 50% --preview 'tree -C {}')
+    if [[ -n "$selected_dir" ]]; then
+        cd "$selected_dir" || return 1
+    fi
+}
+
+alias cdh='cd_fzf ~'
+
+REPOS_DIR="$HOME/git"
+alias cdd='cd_fzf "$REPOS_DIR" 2'
+
 
 # Yazi shell wrapper that provides the ability to change the CWD when exiting Yazi. Exit with "q" to change, exit with "Q" to not change.
 # See: https://github.com/yazi-rs/yazi-rs.github.io/blob/main/versioned_docs/version-26.5.6/quick-start.md?plain=1#L19
