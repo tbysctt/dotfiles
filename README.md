@@ -22,7 +22,7 @@ Note that Stow's default target is actually the parent directory of the current 
 
 #### Neovim
 
-The Neovim config is uses the LazyVim distribution, with a few customisations, such as:
+There is a vanilla Neovim config, as well as a configuration of the LazyVim distribution, with a few customisations, such as:
 
 - Remove massive "LAZYVIM" graphic from Dashboard
 - Show GitHub repo information on the Dashboard (requires GitHub CLI to be installed)
@@ -35,6 +35,14 @@ The Neovim config is uses the LazyVim distribution, with a few customisations, s
 - Installs Sidekick for AI assisted programming
 - Adds language support for JavaScript/TypeScript, Go, PHP
 - Disables inlay hints by default
+
+Managing multiple installations of Neovim can be messy if not done properly. If things get messy you can clear all installed plugins and their cache like so:
+
+```sh
+rm -r ~/.local/share/nvim
+rm -r ~/.local/state/nvim
+rm -r ~/.cache/nvim
+```
 
 #### Alacritty
 
