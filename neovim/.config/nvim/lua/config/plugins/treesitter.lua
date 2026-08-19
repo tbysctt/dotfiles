@@ -35,19 +35,21 @@ ts.install(installed_parsers)
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
 	callback = function(event)
+		-- Determine Tree-sitter language
 		local lang = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
 
 		if not lang or not pcall(vim.treesitter.language.add, lang) then
+			-- No parser is installed/loadable
 			return
 		end
 
-		-- Bail out when highlights queries are missing so legacy syntax still works
 		if not vim.treesitter.query.get(lang, "highlights") then
+			-- There is no highlights.scm query. Bail out so legacy syntax stil works
 			return
 		end
 
+		-- Enable Tree-sitter highlighting in the buffer
 		pcall(vim.treesitter.start, event.buf, lang)
-		vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 	end,
 })
 

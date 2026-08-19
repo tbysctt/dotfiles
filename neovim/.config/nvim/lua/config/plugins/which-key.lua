@@ -1,5 +1,3 @@
--- TODO: NOT EXACT YET
-
 local wk = require("which-key")
 
 wk.setup({

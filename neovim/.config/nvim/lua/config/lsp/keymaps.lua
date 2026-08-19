@@ -88,22 +88,6 @@ map("n", "<A-p>", function()
 	Snacks.words.jump(-vim.v.count1, true)
 end, { desc = "Prev reference" })
 
-local function diagnostic_goto(next, severity)
-	return function()
-		vim.diagnostic.jump({
-			count = (next and 1 or -1) * vim.v.count1,
-			severity = severity and vim.diagnostic.severity[severity] or nil,
-			float = true,
-		})
-	end
-end
-
-map("n", "]d", diagnostic_goto(true), { desc = "Next diagnostic" })
-map("n", "[d", diagnostic_goto(false), { desc = "Prev diagnostic" })
-map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next error" })
-map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev error" })
-map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next warning" })
-map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev warning" })
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 map("n", "<leader>ds", function()
 	Snacks.picker.diagnostics()
@@ -115,7 +99,3 @@ end, { lsp = { method = "textDocument/documentSymbol" }, desc = "Document symbol
 map("n", "<leader>sS", function()
 	Snacks.picker.lsp_workspace_symbols()
 end, { lsp = { method = "workspace/symbol" }, desc = "Workspace symbols" })
-
-map("n", "<leader>uH", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "Toggle inlay hints" })
