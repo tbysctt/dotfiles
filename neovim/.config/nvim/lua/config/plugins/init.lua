@@ -1,3 +1,4 @@
+require("config.plugins.autopairs")
 require("config.plugins.blink")
 require("config.plugins.conform")
 require("config.plugins.gitsigns")

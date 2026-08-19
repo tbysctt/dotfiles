@@ -28,6 +28,8 @@ vim.pack.add({
 	gh("folke/snacks.nvim"),
 	gh("nvim-lualine/lualine.nvim"),
 
+	gh("windwp/nvim-autopairs"),
+
 	gh("nvim-neotest/nvim-nio"),
 	gh("nvim-neotest/neotest"),
 	gh("nvim-neotest/neotest-python"),
