@@ -65,3 +65,7 @@ end, { silent = true, desc = "Git log" })
 map("n", "<leader>gB", function()
 	gs.toggle_current_line_blame()
 end, { silent = true, desc = "Toggle blame" })
+
+map("n", "<leader>gg", function()
+	Snacks.lazygit()
+end, { silent = true, desc = "Lazygit" })
