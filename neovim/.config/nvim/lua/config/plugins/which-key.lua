@@ -12,7 +12,7 @@ wk.add({
 	{ "<leader>f", group = "files/find" },
 	{ "<leader>g", group = "git" },
 	{ "<leader>s", group = "search" },
-	{ "<leader>t", group = "test" },
+	{ "<leader>t", group = "Tests" },
 	{ "<leader>u", group = "ui" },
 	{ "<leader>x", group = "diagnostics/quickfix" },
 })

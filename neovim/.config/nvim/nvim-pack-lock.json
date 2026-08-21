@@ -21,6 +21,10 @@
       "rev": "11595bf747edc270bce2069d1020502ad4ae56cf",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
+    "lazydev.nvim": {
+      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
+      "src": "https://github.com/folke/lazydev.nvim"
+    },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -32,6 +36,10 @@
     "neotest": {
       "rev": "27bf921498043f7ecd821d6db68d05de244bbd02",
       "src": "https://github.com/nvim-neotest/neotest"
+    },
+    "neotest-go": {
+      "rev": "59b50505053f9c45a9febb79e11a56206c3e3901",
+      "src": "https://github.com/akinsho/neotest-go"
     },
     "neotest-jest": {
       "rev": "0e7979d51301dfae5ef839d771bd28cf593fde3f",

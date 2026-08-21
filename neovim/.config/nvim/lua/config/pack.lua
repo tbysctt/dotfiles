@@ -26,6 +26,7 @@ vim.pack.add({
 	gh("folke/todo-comments.nvim"),
 	gh("folke/which-key.nvim"),
 	gh("folke/snacks.nvim"),
+	gh("folke/lazydev.nvim"),
 	gh("nvim-lualine/lualine.nvim"),
 
 	gh("windwp/nvim-autopairs"),
@@ -35,5 +36,6 @@ vim.pack.add({
 	gh("nvim-neotest/neotest-python"),
 	gh("nvim-neotest/neotest-jest"),
 	gh("marilari88/neotest-vitest"),
+	gh("akinsho/neotest-go"),
 	gh("thenbe/neotest-playwright"),
 })

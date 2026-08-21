@@ -67,7 +67,9 @@ map({ "n", "v" }, "<leader>cc", vim.lsp.codelens.run, {
 	lsp = { method = "textDocument/codeLens" },
 	desc = "Run codelens",
 })
-map("n", "<leader>cC", vim.lsp.codelens.refresh, {
+map("n", "<leader>cC", function()
+	vim.lsp.codelens.enable(true, { bufnr = 0 })
+end, {
 	lsp = { method = "textDocument/codeLens" },
 	desc = "Refresh codelens",
 })

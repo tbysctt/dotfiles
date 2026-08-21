@@ -1,6 +1,7 @@
 -- TODO: NOT EXACT YET
 
 local Snacks = require("snacks")
+local gitsigns = require("gitsigns")
 local map = vim.keymap.set
 
 Snacks.setup({
@@ -63,7 +64,7 @@ map("n", "<leader>gl", function()
 end, { silent = true, desc = "Git log" })
 
 map("n", "<leader>gB", function()
-	gs.toggle_current_line_blame()
+	gitsigns.toggle_current_line_blame()
 end, { silent = true, desc = "Toggle blame" })
 
 map("n", "<leader>gg", function()
