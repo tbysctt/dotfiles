@@ -25,6 +25,7 @@ require("conform").setup({
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
 		terraform = { "terraform_fmt" },
 		["terraform-vars"] = { "terraform_fmt" },
+		toml = { "taplo" },
 
 		javascript = biome_or({ "prettier" }),
 		javascriptreact = biome_or({ "prettier" }),

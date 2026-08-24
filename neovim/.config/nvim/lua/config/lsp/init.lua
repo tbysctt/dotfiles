@@ -22,6 +22,7 @@ local enabled_servers = {
 	"yamlls",
 	"terraformls",
 	"tailwindcss",
+	"taplo",
 }
 
 if vim.fn.executable("basedpyright-langserver") == 1 or vim.fn.executable("basedpyright") == 1 then
