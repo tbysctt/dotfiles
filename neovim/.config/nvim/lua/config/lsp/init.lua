@@ -29,6 +29,10 @@ if vim.fn.executable("basedpyright-langserver") == 1 or vim.fn.executable("based
 	table.insert(enabled_servers, "basedpyright")
 end
 
+if vim.fn.executable("bash-language-server") == 1 then
+	table.insert(enabled_servers, "bashls")
+end
+
 vim.lsp.enable(enabled_servers)
 
 require("config.lsp.keymaps")

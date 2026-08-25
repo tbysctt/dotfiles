@@ -15,9 +15,20 @@ require("conform").setup({
 		lsp_format = "fallback",
 	},
 	formatters_by_ft = {
+
+		-- YAML/JSON/TOML/etc
 		yaml = { "prettier" },
+		toml = { "taplo" },
+		json = biome_or({ "prettier" }),
+		jsonc = biome_or({ "prettier" }),
 		markdown = { "prettier" },
 
+		-- Shell scripting
+		sh = { "shfmt" },
+		bash = { "shfmt" },
+		zsh = { "shfmt" },
+
+		-- Programming/Development
 		lua = { "stylua" },
 		go = { "goimports", "gofumpt" },
 		rust = { "rustfmt" },
@@ -25,13 +36,10 @@ require("conform").setup({
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
 		terraform = { "terraform_fmt" },
 		["terraform-vars"] = { "terraform_fmt" },
-		toml = { "taplo" },
-
 		javascript = biome_or({ "prettier" }),
 		javascriptreact = biome_or({ "prettier" }),
 		typescript = biome_or({ "prettier" }),
 		typescriptreact = biome_or({ "prettier" }),
-		json = biome_or({ "prettier" }),
 		html = biome_or({ "prettier" }),
 		css = biome_or({ "prettier" }),
 	},
