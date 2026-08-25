@@ -14,7 +14,6 @@
     // "glob": "allow",
     // "bash": "ask",
     // "webfetch": "allow",
-    // "lsp": "allow", // Experimental. Only available when OPENCODE_EXPERIMENTAL_LSP_TOOL=true (or OPENCODE_EXPERIMENTAL=true).
     // "todowrite": "allow",
     // "websearch": "allow", // only available when using the OpenCode provider or when the OPENCODE_ENABLE_EXA environment variable is set to any truthy value (e.g., true or 1).
     // "question": "allow",
