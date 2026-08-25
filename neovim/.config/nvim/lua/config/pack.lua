@@ -30,6 +30,7 @@ vim.pack.add({
 	gh("nvim-lualine/lualine.nvim"),
 
 	gh("windwp/nvim-autopairs"),
+	gh("kylechui/nvim-surround"),
 
 	gh("nvim-neotest/nvim-nio"),
 	gh("nvim-neotest/neotest"),
