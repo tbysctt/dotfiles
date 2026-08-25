@@ -1,0 +1,43 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "git *": "allow",
+      "git add *": "deny",
+      "git stage *": "deny",
+      "git reset *": "deny",
+      "git commit *": "deny",
+    },
+    // "read": "allow",
+    // "edit": "allow",
+    // "grep": "allow",
+    // "glob": "allow",
+    // "bash": "ask",
+    // "webfetch": "allow",
+    // "lsp": "allow", // Experimental. Only available when OPENCODE_EXPERIMENTAL_LSP_TOOL=true (or OPENCODE_EXPERIMENTAL=true).
+    // "todowrite": "allow",
+    // "websearch": "allow", // only available when using the OpenCode provider or when the OPENCODE_ENABLE_EXA environment variable is set to any truthy value (e.g., true or 1).
+    // "question": "allow",
+    "external_directory": {
+      "$HOME/dev/**": "allow",
+    },
+    "mcp": {
+      "atlassian": {
+        "type": "remote",
+        "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+        "enabled": false,
+        "timeout": 600000,
+      },
+      "github": {
+        "type": "remote",
+        "url": "https://api.githubcopilot.com/mcp/",
+        "headers": {
+          "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+        },
+        "enabled": true,
+        "timeout": 600000,
+      },
+    },
+    "lsp": true,
+  },
+}
