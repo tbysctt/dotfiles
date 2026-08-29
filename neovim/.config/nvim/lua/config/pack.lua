@@ -14,7 +14,6 @@ vim.pack.add({
 
 	gh("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
 	gh("mason-org/mason.nvim"),
-	gh("mason-org/mason-lspconfig.nvim"),
 
 	gh("stevearc/conform.nvim"),
 

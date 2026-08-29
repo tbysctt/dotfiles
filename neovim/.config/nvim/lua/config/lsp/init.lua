@@ -15,8 +15,8 @@ vim.lsp.config("*", {
 local enabled_servers = {
 	"lua_ls",
 	"gopls",
-	-- "tsc", -- TypeScript 7+ LSP. Not available via Mason yet, so will need to be installed on the system
-	"vtsls", -- The LSP wrapper around the TypeScript VSCode extension
+	"tsc", -- Official native LSP included in TypeScript 7
+	-- "vtsls", -- The LSP wrapper around the TypeScript VSCode extension
 	"ruff",
 	"intelephense",
 	"yamlls",
