@@ -1,4 +1,6 @@
-require("config.plugins.mason")
+if require("config.env").use_mason() then
+	require("config.plugins.mason")
+end
 require("config.plugins.autopairs")
 require("config.plugins.lazydev")
 require("config.plugins.blink")

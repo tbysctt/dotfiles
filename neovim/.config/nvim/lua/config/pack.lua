@@ -1,43 +1,50 @@
 -- Dependencies must be listed before dependents, vim.pack has no dep resolution
 
-local gh = function(repo)
+local github = function(repo)
 	return "https://github.com/" .. repo
 end
 
-vim.pack.add({
-	{ src = gh("catppuccin/nvim"), name = "catppuccin" },
+local plugins = {
+	{ src = github("catppuccin/nvim"), name = "catppuccin" },
 
-	gh("echasnovski/mini.icons"),
-	gh("folke/ts-comments.nvim"),
+	github("echasnovski/mini.icons"),
+	github("folke/ts-comments.nvim"),
 
-	{ src = gh("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
+	{ src = github("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
 
-	gh("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
-	gh("mason-org/mason.nvim"),
+	github("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
+}
 
-	gh("stevearc/conform.nvim"),
+if require("config.env").use_mason() then
+	table.insert(plugins, github("mason-org/mason.nvim"))
+end
 
-	gh("nvim-lua/plenary.nvim"),
+vim.list_extend(plugins, {
+	github("stevearc/conform.nvim"),
 
-	{ src = gh("nvim-treesitter/nvim-treesitter"), name = "nvim-treesitter", version = "main" },
+	github("nvim-lua/plenary.nvim"),
 
-	gh("lewis6991/gitsigns.nvim"),
-	gh("MagicDuck/grug-far.nvim"),
+	{ src = github("nvim-treesitter/nvim-treesitter"), name = "nvim-treesitter", version = "main" },
 
-	gh("folke/todo-comments.nvim"),
-	gh("folke/which-key.nvim"),
-	gh("folke/snacks.nvim"),
-	gh("folke/lazydev.nvim"),
-	gh("nvim-lualine/lualine.nvim"),
+	github("lewis6991/gitsigns.nvim"),
+	github("MagicDuck/grug-far.nvim"),
 
-	gh("windwp/nvim-autopairs"),
-	gh("kylechui/nvim-surround"),
+	github("folke/todo-comments.nvim"),
+	github("folke/which-key.nvim"),
+	github("folke/snacks.nvim"),
+	github("folke/lazydev.nvim"),
+	github("nvim-lualine/lualine.nvim"),
 
-	gh("nvim-neotest/nvim-nio"),
-	gh("nvim-neotest/neotest"),
-	gh("nvim-neotest/neotest-python"),
-	gh("nvim-neotest/neotest-jest"),
-	gh("marilari88/neotest-vitest"),
-	gh("akinsho/neotest-go"),
-	gh("thenbe/neotest-playwright"),
+	github("windwp/nvim-autopairs"),
+	github("kylechui/nvim-surround"),
+
+	github("nvim-neotest/nvim-nio"),
+	github("nvim-neotest/neotest"),
+	github("nvim-neotest/neotest-python"),
+	github("nvim-neotest/neotest-jest"),
+	github("marilari88/neotest-vitest"),
+	github("akinsho/neotest-go"),
+	github("thenbe/neotest-playwright"),
 })
+
+vim.pack.add(plugins)
