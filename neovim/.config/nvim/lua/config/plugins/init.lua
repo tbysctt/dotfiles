@@ -1,3 +1,4 @@
+require("config.plugins.mason")
 require("config.plugins.autopairs")
 require("config.plugins.lazydev")
 require("config.plugins.blink")

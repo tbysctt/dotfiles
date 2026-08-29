@@ -15,23 +15,17 @@ vim.lsp.config("*", {
 local enabled_servers = {
 	"lua_ls",
 	"gopls",
-	"tsc", -- Use vtsls isntead if tsc isn't v7.x.x
-	-- "vtsls", -- The LSP wrapper around the VSCode extension - only needed if tsc isn't v7.x.x
+	-- "tsc", -- TypeScript 7+ LSP. Not available via Mason yet, so will need to be installed on the system
+	"vtsls", -- The LSP wrapper around the TypeScript VSCode extension
 	"ruff",
 	"intelephense",
 	"yamlls",
 	"terraformls",
 	"tailwindcss",
 	"taplo",
+	"basedpyright",
+	"bashls",
 }
-
-if vim.fn.executable("basedpyright-langserver") == 1 or vim.fn.executable("basedpyright") == 1 then
-	table.insert(enabled_servers, "basedpyright")
-end
-
-if vim.fn.executable("bash-language-server") == 1 then
-	table.insert(enabled_servers, "bashls")
-end
 
 vim.lsp.enable(enabled_servers)
 
