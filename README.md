@@ -8,7 +8,7 @@ This repo stores multiple configurations, each for a particular program or colle
 
 The configurations are stored in separate directories in the root of the repo. You "install" a configuration by running `stow <config dir name>` from within the repo, which will create symlinks for all files in the specified directory in the target directory. Each configuration's directory is structured to mirror a home directory with the expectation that your own home directory is the target.
 
-Note that Stow's default target is actually the parent directory of the current working directory, so it's easiest to clone this repo directly into your home directory. Otherwise you'll ned to include the `--target $HOME` flag in your `stow` commands to specify your home directory as the target. Your choice :)
+Note that Stow's default target is actually the parent directory of the current working directory, so it's easiest to clone this repo directly into your home directory. Otherwise you'll need to include the `--target $HOME` flag in your `stow` commands to specify your home directory as the target. Your choice :)
 
 ## Get started
 
@@ -16,25 +16,50 @@ Note that Stow's default target is actually the parent directory of the current 
 
 2. Clone this repo to your home directory
 
-3. Install configurations with `stow <configuration directory name>`. For example, to install the Lazy Vim config in [lazyvim](./lazyvim/), run `stow lazyvim`.
+3. Install configurations with `stow <configuration directory name>`. For example:
+
+   ```sh
+   stow neovim # Symlinks everything in 'neovim' directory
+   stow git    # Symlinks everything in the 'git' directory
+   ```
+
+   You can install multiple packages at once:
+
+   ```sh
+   stow neovim zsh git alacritty # Symlinks everything in the 'neovim', 'zsh', 'git' and 'alacritty' directories
+   ```
 
 ## Important notes about each config
 
-#### Neovim
+### Neovim
 
-There is a vanilla Neovim config, as well as a configuration of the LazyVim distribution, with a few customisations, such as:
+A modern configuration of Neovim, requiring at least 0.12.x as it uses the new built-in `vim.pack` package manager.
 
-- Remove massive "LAZYVIM" graphic from Dashboard
-- Show GitHub repo information on the Dashboard (requires GitHub CLI to be installed)
-- Sets conceal level to zero - This was extremely annoying when writing Markdown
-- Shows hidden and git-ignored files in the Explorer. Makes hidden files appear with "Normal" font colour, and only the git-ignored files to appear with the greyed-out font colour.
-- Shows hidden files in the Files picker, but not git-ignored files.
-- Adds some additional keymaps to make it easier to jump to the LazyVim config and healthcheck
-- Opens the Snacks Dashboard when the last buffer is deleted
-- Shows a Git Blame in ghost text on the current line
-- Installs Sidekick for AI assisted programming
-- Adds language support for JavaScript/TypeScript, Go, PHP
+It uses Mason for installing LSPs, unless `NEOVIM_USE_MASON` is set to `false`, in which case Mason will not be configured or used at all. In that case, you'll need to manually install any tools you wish to use.
+
+It also supports an HTTP proxy URL to be set via the `NEOVIM_HTTP_PROXY` environment variable. This allows the same config to be used on corporate machines that require an HTTP proxy for any web fetch requests, such as for fetching schemas for YAML LS and JSON LS.
+
+### LazyVim
+
+A separate LazyVim distribution install at `~/.config/lazyvim/`. This was what I was using while I learnt Neovim, before writing my own config from scratch.
+
+Customisations from the OOTB LazyVim experience include:
+
+- Replaces the large LAZYVIM ASCII header with "Welcome"
+- Dashboard shows root/CWD, git status, git log, and Neovim/LazyVim versions
+- Sets conceal level to zero — this was extremely annoying when writing Markdown
+- Explorer shows hidden files with normal font colour; git-ignored files appear greyed out
+- Files picker shows hidden files but not git-ignored files
+- `<leader>l*` keymaps for Lazy, LazyHealth, config, and extras
+- Opens the Snacks dashboard when the last buffer is deleted
+- Git blame in ghost text on the current line
+- Sidekick for AI-assisted programming (via LazyVim extra)
+- Language extras: Go, PHP, Python, TypeScript, Terraform, Docker, JSON, TOML, Tailwind, and more
 - Disables inlay hints by default
+
+This can be launched with `NVIM_APPNAME=lazyvim nvim`, or `lazyvim` if the ZSH config from this repo is being used.
+
+### Neovim plugin cache
 
 Managing multiple installations of Neovim can be messy if not done properly. If things get messy you can clear all installed plugins and their cache like so:
 
@@ -44,15 +69,19 @@ rm -r ~/.local/state/nvim
 rm -r ~/.cache/nvim
 ```
 
-#### Alacritty
+### Alacritty
 
 Alacritty expects the Fira Code Nerd Font to be installed and available.
+
+#### How to install Fira Code Nerd Font on Linux
+
+NOTE: This will be different on MacOS
 
 1. Download the Fira Code Nerd Font
 
 https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip
 
-2. Create a fonts directory (if it doesn’t exist):
+2. Create a fonts directory (if it doesn't exist):
 
 ```sh
 # For system-wide
@@ -83,7 +112,7 @@ fc-cache -fv
 fc-list | grep -i "FiraCode"
 ```
 
-#### ZSH
+### ZSH
 
 To make ZSH your default shell, run the following. Note that if you use `sudo`, it will change the default shell for the root user instead of your user.
 
@@ -99,22 +128,11 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.zsh/zsh-history-substring-search
 ```
 
-It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. Example snippets I put in `extra.sh` on some machines:
+It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. Example snippets I put in `extra.zsh` on some machines:
 
 Start SSH agent:
 
 ```sh
-# # SSH agent setup I had in Arch PC's .zshrc
-# if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#   ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-# fi
-# if [ ! -f "$SSH_AUTH_SOCK" ]; then
-#   source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-# fi
-
-# figure out which of these is the better/ideal/proper one and clean this up
-
-# SSH agent setup I had in arch laptop's .zprofile
 if [ -z "$SSH_AUTH_SOCK" ]; then
   # Check for a currently running instance of the agent
   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
@@ -132,9 +150,19 @@ Set keyboard brightness on the Lenovo laptop:
 brightnessctl --device='platform::kbd_backlight' set 1
 ```
 
-#### Git
+### Git
 
 Similar to how ZSH sources `~/.zsh/extra.zsh` (which is not committed) for host-specific config, the Git config points to a `~/.gitconfig.local` file for any additional host-specific or sensitive Git config you'd like to apply, such as GPG config. Create this file to use it as it's not committed.
+
+The global config sets `EDITOR=vim`, uses `main` as the default branch, rebases on pull, and includes a global gitignore for editor and OS junk files.
+
+### OpenCode
+
+- Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
+- Bash permissions: allows most `git *` commands, denies `git add`, `git stage`, `git reset`, and `git commit`
+- External directory access: `$HOME/dev/**`
+- Custom `chat` agent defined in `agents/chat.md`
+- PATH: `~/.opencode/bin` (already set in the ZSH config)
 
 ## Notes for new machines
 
