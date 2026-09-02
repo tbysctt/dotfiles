@@ -1,26 +1,32 @@
 # zmodload zsh/zprof
 
-set -o interactive_comments
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=1000000
+SAVEHIST=1000000
 
+setopt EXTENDED_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
-setopt EXTENDED_HISTORY
+
+set -o interactive_comments
 
 # Initialise the Zsh completion system, enabling tab completion for commands, arguments, filenames, and repository elements like Git branches and remotes.
 autoload -Uz compinit
 
 # Check the cache once a day rather than every time
 if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
-  compinit -C
+    compinit -C
 else
-  compinit
+    compinit
 fi
 
 # Add version control support
 autoload -Uz add-zsh-hook vcs_info
 setopt prompt_subst # Enable prompt substitution for variable expansion
 add-zsh-hook precmd vcs_info
-zstyle ':vcs_info:git:*' formats ' %b %u%c' # %u = unstaged changes, %c = staged changes, %b = branch name
+zstyle ':vcs_info:git:*' formats ' %b %u%c'            # %u = unstaged changes, %c = staged changes, %b = branch name
 zstyle ':vcs_info:git:*' actionformats ' %b (%a) %u%c' # %a = action git is currently performing ("merge" or "rebase")
 zstyle ':vcs_info:git:*' unstagedstr '* '
 zstyle ':vcs_info:git:*' stagedstr '+ '
@@ -31,26 +37,25 @@ bindkey -e
 KEYMAP_VALUE=""
 
 function zle-line-init {
-  if [[ ${KEYMAP} == vicmd ]]; then
-    KEYMAP_VALUE="%F{red}[vicmd]%f"
-  else
-    KEYMAP_VALUE=""
-  fi
-  zle reset-prompt
+    if [[ ${KEYMAP} == vicmd ]]; then
+        KEYMAP_VALUE="%F{red}[vicmd]%f"
+    else
+        KEYMAP_VALUE=""
+    fi
+    zle reset-prompt
 }
 
 function zle-keymap-select {
-  KEYMAP_VALUE=$KEYMAP
-  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-    KEYMAP_VALUE="%F{red}[vicmd]%f"
-  else
-    KEYMAP_VALUE=""
-  fi
-  zle reset-prompt
+    KEYMAP_VALUE=$KEYMAP
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+        KEYMAP_VALUE="%F{red}[vicmd]%f"
+    else
+        KEYMAP_VALUE=""
+    fi
+    zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
-
 
 PROMPT='%F{blue}%1~%f ${vcs_info_msg_0_}%# '
 RPROMPT="${KEYMAP_VALUE} %(?.%F{green}✓.%F{red}×)%f %n@%m ($(uname -s))"
@@ -73,20 +78,18 @@ export PATH="$HOME/go/bin:$PATH"
 export VISUAL="nvim"
 export EDITOR="vim"
 
-
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  # Set PATH, MANPATH, etc., for Homebrew.
-  export PATH="/opt/homebrew/bin:$PATH"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+    # Set PATH, MANPATH, etc., for Homebrew.
+    export PATH="/opt/homebrew/bin:$PATH"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  # Mac-specific aliases
-  alias chrome-no-cors='open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome_dev"'
+    # Mac-specific aliases
+    alias chrome-no-cors='open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome_dev"'
 fi
 
-if command -v kubectl &> /dev/null; then
-  source <(kubectl completion zsh)
+if command -v kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
 fi
-
 
 # Aliases
 alias nv=nvim
@@ -130,8 +133,8 @@ function cd_fzf() {
     [[ -n "$max_depth" ]] && depth_args=(--max-depth "$max_depth")
 
     local selected_dir
-    selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" \
-        | fzf +m --height 50% --preview 'tree -C {}')
+    selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" |
+        fzf +m --height 50% --preview 'tree -C {}')
     if [[ -n "$selected_dir" ]]; then
         cd "$selected_dir" || return 1
     fi
@@ -142,15 +145,14 @@ alias cdh='cd_fzf ~'
 REPOS_DIR="$HOME/git"
 alias cdd='cd_fzf "$REPOS_DIR" 2'
 
-
 # Yazi shell wrapper that provides the ability to change the CWD when exiting Yazi. Exit with "q" to change, exit with "Q" to not change.
 # See: https://github.com/yazi-rs/yazi-rs.github.io/blob/main/versioned_docs/version-26.5.6/quick-start.md?plain=1#L19
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-	command rm -f -- "$tmp"
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    command yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd <"$tmp"
+    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+    command rm -f -- "$tmp"
 }
 
 # Node Version Manager
@@ -163,17 +165,65 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 # eval "$(pyenv init - zsh)"
 # export PATH="$HOME/.local/bin:$PATH"
 
-
 # Functions
 
-if command -v fzf &> /dev/null; then
-  source <(fzf --zsh)
-  function fzcd() {
-    local dir
-    local search_dir="${1:-$HOME}"  # Default to $HOME if no argument is provided
-    dir=$(find "$search_dir" -type d | fzf) && cd "$dir"
-  }
+if command -v fzf &>/dev/null; then
+    source <(fzf --zsh)
+    function fzcd() {
+        local dir
+        local search_dir="${1:-$HOME}" # Default to $HOME if no argument is provided
+        dir=$(find "$search_dir" -type d | fzf) && cd "$dir"
+    }
 fi
+
+# Clipboard copy/paste functions that use the correct tool under the hood, depending on the environment (ie. MacOS, Linux X11 or Linux Wayland).
+# Use these functions as drop-in replacements, for example:
+# echo "Hello World" | cpc
+# cbp > new_file.txt
+
+cbc() {
+    case "$(uname -s)" in
+    Darwin) pbcopy ;;
+    Linux)
+        if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
+            wl-copy
+        elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
+            xclip -selection clipboard
+        elif [ -n "$DISPLAY" ] && command -v xsel >/dev/null 2>&1; then
+            xsel --clipboard --input
+        else
+            echo "cbc: no clipboard tool found" >&2
+            return 1
+        fi
+        ;;
+    *)
+        echo "cbc: unsupported OS" >&2
+        return 1
+        ;;
+    esac
+}
+
+cbp() {
+    case "$(uname -s)" in
+    Darwin) pbpaste ;;
+    Linux)
+        if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-paste >/dev/null 2>&1; then
+            wl-paste
+        elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
+            xclip -selection clipboard -o
+        elif [ -n "$DISPLAY" ] && command -v xsel >/dev/null 2>&1; then
+            xsel --clipboard --output
+        else
+            echo "cbc: no clipboard tool found" >&2
+            return 1
+        fi
+        ;;
+    *)
+        echo "cbc: unsupported OS" >&2
+        return 1
+        ;;
+    esac
+}
 
 # Enable GPG signing for Git commits
 export GPG_TTY=$(tty)
@@ -183,24 +233,24 @@ export GPG_TTY=$(tty)
 
 # Niceties for interactive shell experience, making it similar to Fish shell.
 [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Must be sourced last
+[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh                     # Must be sourced last
 [ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh # Must be sourced last
 
 # Scripts to setup experiment environments in a temporary directory
 
 go-experiment() {
-  cd `mktemp -d`
-  go mod init example.com/go-experiment
-  git init
-  touch main.go
-  nv
+    cd $(mktemp -d)
+    go mod init example.com/go-experiment
+    git init
+    touch main.go
+    nv
 }
 
 py-experiment() {
-  cd `mktemp -d`
-  poetry new . --name "experiment"
-  git init
-  nv
+    cd $(mktemp -d)
+    poetry new . --name "experiment"
+    git init
+    nv
 }
 
 # zprof
