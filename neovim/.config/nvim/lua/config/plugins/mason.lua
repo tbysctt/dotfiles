@@ -12,6 +12,7 @@ local mason_packages = {
 	"ruff",
 	"intelephense",
 	"yaml-language-server",
+	"json-lsp",
 	"terraform-ls",
 	"tailwindcss-language-server",
 	"taplo", -- TOML language server

@@ -20,6 +20,7 @@ local enabled_servers = {
 	"ruff",
 	"intelephense",
 	"yamlls",
+	"jsonls",
 	"terraformls",
 	"tailwindcss",
 	"taplo",
