@@ -177,6 +177,12 @@ An example local config overlay file:
   "mcp": {
     "atlassian": {
       "enabled": true
+    },
+    "context7": {
+      "enabled": true,
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
     }
   }
 }
