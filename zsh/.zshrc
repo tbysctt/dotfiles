@@ -68,6 +68,7 @@ export PATH="$PATH:$HOME/bin"
 
 # OpenCode
 export PATH="$HOME/.opencode/bin:$PATH"
+export OPENCODE_CONFIG="$HOME/.config/opencode/local.jsonc" # Machine-local overrides that get merged on top of the base config
 
 # From the Go docs, adds "go" command to path
 export PATH=$PATH:/usr/local/go/bin

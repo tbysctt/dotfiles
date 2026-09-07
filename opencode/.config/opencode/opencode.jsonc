@@ -18,7 +18,7 @@
     // "websearch": "allow", // only available when using the OpenCode provider or when the OPENCODE_ENABLE_EXA environment variable is set to any truthy value (e.g., true or 1).
     // "question": "allow",
     "external_directory": {
-      "$HOME/dev/**": "allow",
+      "$HOME/git/**": "allow",
     },
   },
   "mcp": {

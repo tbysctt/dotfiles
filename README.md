@@ -159,10 +159,30 @@ The global config sets `EDITOR=vim`, uses `main` as the default branch, rebases 
 ### OpenCode
 
 - Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
-- Bash permissions: allows most `git *` commands, denies `git add`, `git stage`, `git reset`, and `git commit`
-- External directory access: `$HOME/dev/**`
-- Custom `chat` agent defined in `agents/chat.md`
-- PATH: `~/.opencode/bin` (already set in the ZSH config)
+- Shared config lives in `~/.config/opencode/opencode.jsonc` (stowed). For host-specific extras, create `~/.config/opencode/local.jsonc` (not committed)
+  - ZSH sets `OPENCODE_CONFIG` to that path so OpenCode deep-merges it on top of the shared config. Verify with `opencode debug config`.
+
+For machine-specific config variations, create a local config overlay file at `.config/opencode/local.jsonc`. ZSHRC sets and env var (`OPENCODE_CONFIG`) that points to this location so OpenCode knows to deep-merge any config found here into the base config.
+
+An example local config overlay file:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "external_directory": {
+      "$HOME/work/**": "allow"
+    }
+  },
+  "mcp": {
+    "atlassian": {
+      "enabled": true
+    }
+  }
+}
+```
+
+Final config can be verified with `opencode debug config`.
 
 ## Notes for new machines
 
