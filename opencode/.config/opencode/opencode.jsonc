@@ -8,15 +8,6 @@
       "git reset *": "deny",
       "git commit *": "deny",
     },
-    // "read": "allow",
-    // "edit": "allow",
-    // "grep": "allow",
-    // "glob": "allow",
-    // "bash": "ask",
-    // "webfetch": "allow",
-    // "todowrite": "allow",
-    // "websearch": "allow", // only available when using the OpenCode provider or when the OPENCODE_ENABLE_EXA environment variable is set to any truthy value (e.g., true or 1).
-    // "question": "allow",
     "external_directory": {
       "$HOME/git/**": "allow",
     },
@@ -34,7 +25,7 @@
       "headers": {
         "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}",
       },
-      "enabled": true,
+      "enabled": false,
       "timeout": 600000,
     },
   },
