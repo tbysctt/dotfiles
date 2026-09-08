@@ -26,7 +26,8 @@
       "> /dev/*": "deny",
     },
     "external_directory": {
-      "$HOME/git/**": "allow",
+      "$HOME/git/**": "allow", // The directory I usually clone all my repos to
+      "/tmp/*": "allow", // OpenCode often uses this for random stuff and I'm sick of approving it's request for access
     },
   },
   "mcp": {
@@ -37,13 +38,13 @@
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "command": ["playwright-mcp"], // Install via `npm i -g @playwright/mcp@latest`
       "enabled": true,
       "timeout": 60000,
     },
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
+      "command": ["chrome-devtools-mcp"], // Install via `npm i -g chrome-devtools-mcp@latest`
       "enabled": true,
       "timeout": 60000,
     },
