@@ -159,12 +159,22 @@ The global config sets `EDITOR=vim`, uses `main` as the default branch, rebases 
 ### OpenCode
 
 - Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
-- Shared config lives in `~/.config/opencode/opencode.jsonc` (stowed). For host-specific extras, create `~/.config/opencode/local.jsonc` (not committed)
-  - ZSH sets `OPENCODE_CONFIG` to that path so OpenCode deep-merges it on top of the shared config. Verify with `opencode debug config`.
+- Shared config lives in `~/.config/opencode/` (stowed): `opencode.jsonc`, `agents/`, `commands/`, `skills/`, etc.
+- Host-specific overlay is always available at `~/.config/opencode-overlay/` (not committed). ZSHRC creates the directory and sets `OPENCODE_CONFIG_DIR` so OpenCode deep-merges it on top of the base config. Overlay *content* is optional — an empty directory is fine.
 
-For machine-specific config variations, create a local config overlay file at `.config/opencode/local.jsonc`. ZSHRC sets and env var (`OPENCODE_CONFIG`) that points to this location so OpenCode knows to deep-merge any config found here into the base config.
+Layout:
 
-An example local config overlay file:
+```text
+~/.config/opencode-overlay/
+  opencode.jsonc          # optional host overrides
+  agents/
+  commands/
+  skills/
+```
+
+Add host-specific files anytime, then restart OpenCode (no need to re-source the shell — the env var already points at the overlay directory).
+
+An example overlay `opencode.jsonc`:
 
 ```json
 {
@@ -187,6 +197,8 @@ An example local config overlay file:
   }
 }
 ```
+
+Note: if you use a global `AGENTS.md` under `~/.config/opencode/`, setting `OPENCODE_CONFIG_DIR` can make OpenCode look for `AGENTS.md` in the overlay instead (upstream quirk). Put a copy in `~/.config/opencode-overlay/AGENTS.md`, or keep instructions in `agents/` markdown files.
 
 Final config can be verified with `opencode debug config`.
 

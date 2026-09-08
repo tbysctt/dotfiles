@@ -68,7 +68,10 @@ export PATH="$PATH:$HOME/bin"
 
 # OpenCode
 export PATH="$HOME/.opencode/bin:$PATH"
-export OPENCODE_CONFIG="$HOME/.config/opencode/local.jsonc" # Machine-local overrides that get merged on top of the base config
+# Host-specific overlay (agents/skills/commands/opencode.jsonc). Directory is
+# always present so OPENCODE_CONFIG_DIR is safe; content is optional.
+mkdir -p "$HOME/.config/opencode-overlay"
+export OPENCODE_CONFIG_DIR="$HOME/.config/opencode-overlay"
 
 # From the Go docs, adds "go" command to path
 export PATH=$PATH:/usr/local/go/bin
