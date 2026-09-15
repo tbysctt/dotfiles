@@ -32,6 +32,9 @@ local mason_packages = {
 	"pint",
 	"php-cs-fixer",
 	"terraform",
+
+	-- Linters for nvim-lint
+	"hadolint",
 }
 
 local registry = require("mason-registry")
