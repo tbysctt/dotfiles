@@ -29,6 +29,7 @@ vim.list_extend(plugins, {
 	github("lewis6991/gitsigns.nvim"),
 	github("MagicDuck/grug-far.nvim"),
 
+	github("folke/flash.nvim"),
 	github("folke/todo-comments.nvim"),
 	github("folke/which-key.nvim"),
 	github("folke/snacks.nvim"),
