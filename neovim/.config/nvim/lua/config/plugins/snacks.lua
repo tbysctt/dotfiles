@@ -54,8 +54,12 @@ map({ "n", "x" }, "<leader>sw", function()
 end, { desc = "Grep word" })
 
 map("n", "<leader>sg", function()
-	Snacks.picker.grep()
-end, { silent = true, desc = "Grep" })
+	Snacks.picker.grep({ hidden = true })
+end, { silent = true, desc = "Grep (include hidden files)" })
+
+map("n", "<leader>sG", function()
+	Snacks.picker.grep({ hidden = true, ignored = true })
+end, { silent = true, desc = "Grep (include hidden and git-ignored files)" })
 
 -- GIT
 
