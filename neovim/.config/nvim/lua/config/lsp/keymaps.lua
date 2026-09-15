@@ -91,9 +91,12 @@ map("n", "<A-p>", function()
 end, { desc = "Prev reference" })
 
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line diagnostics" })
-map("n", "<leader>ds", function()
+map("n", "<leader>sd", function()
 	Snacks.picker.diagnostics()
 end, { desc = "Diagnostics" })
+map("n", "<leader>sD", function()
+	Snacks.picker.diagnostics_buffer()
+end, { desc = "Diagnostics (current buffer)" })
 
 map("n", "<leader>ss", function()
 	Snacks.picker.lsp_symbols()

@@ -8,7 +8,6 @@ wk.add({
 	{ "<leader>b", group = "buffers" },
 	{ "<leader>c", group = "code" },
 	{ "<leader>cl", group = "calls" },
-	{ "<leader>d", group = "diagnostics" },
 	{ "<leader>f", group = "files/find" },
 	{ "<leader>g", group = "git" },
 	{ "<leader>s", group = "search" },
