@@ -26,6 +26,7 @@ local enabled_servers = {
 	"taplo",
 	"basedpyright",
 	"bashls",
+	"docker_language_server",
 }
 
 vim.lsp.enable(enabled_servers)

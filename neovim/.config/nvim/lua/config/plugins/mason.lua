@@ -20,6 +20,7 @@ local mason_packages = {
 	"bash-language-server", -- Also used for ZSH
 	"tsc",
 	"vtsls", -- The LSP wrapper around the VSCode TypeScript extension
+	"docker-language-server",
 
 	-- Formatters for Conform (see config/plugins/conform.lua)
 	"stylua",
