@@ -21,6 +21,7 @@ end
 
 vim.list_extend(plugins, {
 	github("stevearc/conform.nvim"),
+	github("artemave/workspace-diagnostics.nvim"),
 
 	github("nvim-lua/plenary.nvim"),
 
