@@ -10,9 +10,11 @@ local function biome_or(fallback)
 end
 
 require("conform").setup({
+	default_format_opts = {
+		lsp_format = "fallback", -- If no formatter is configured for the file type, fall back to the LSP (if one is available)
+	},
 	format_on_save = {
-		timeout_ms = 2500,
-		lsp_format = "fallback",
+		timeout_ms = 1000,
 	},
 	formatters_by_ft = {
 
@@ -30,8 +32,14 @@ require("conform").setup({
 
 		-- Programming/Development
 		lua = { "stylua" },
-		go = { "goimports", "gofumpt" },
-		rust = { "rustfmt" },
+		go = {
+			lsp_format = "prefer",
+			name = "gopls",
+		},
+		rust = {
+			lsp_format = "prefer",
+			name = "rust-analyzer",
+		},
 		python = { "ruff_organize_imports", "ruff_format" },
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
 		terraform = { "terraform_fmt" },
@@ -46,5 +54,7 @@ require("conform").setup({
 })
 
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-	require("conform").format({ async = true, lsp_fallback = true })
-end, { desc = "Format" })
+	require("conform").format({
+		async = true, -- Good for manually triggered buffer formats, doesn't block the Neovim UI
+	})
+end, { desc = "Format buffer/selection" })
