@@ -1,7 +1,5 @@
-local neotest = require("neotest")
-
 ---@diagnostic disable-next-line: missing-fields
-neotest.setup({
+require("neotest").setup({
 	adapters = {
 		require("neotest-python")({
 			runner = "pytest",
@@ -30,36 +28,36 @@ neotest.setup({
 })
 
 vim.keymap.set("n", "<leader>tr", function()
-	neotest.run.run()
+	require("neotest").run.run()
 end, { silent = true, desc = "Run nearest test" })
 vim.keymap.set("n", "<leader>tf", function()
-	neotest.run.run(vim.fn.expand("%"))
+	require("neotest").run.run(vim.fn.expand("%"))
 end, { silent = true, desc = "Run test file" })
 vim.keymap.set("n", "<leader>ta", function()
 	---@type neotest.run.UserRunArgs
 	local args = { suite = true }
-	neotest.run.run(args)
+	require("neotest").run.run(args)
 end, { silent = true, desc = "Run all tests" })
 vim.keymap.set("n", "<leader>tl", function()
-	neotest.run.run_last()
+	require("neotest").run.run_last()
 end, { silent = true, desc = "Run last test" })
 vim.keymap.set("n", "<leader>ts", function()
-	neotest.summary.toggle()
+	require("neotest").summary.toggle()
 end, { silent = true, desc = "Toggle test summary" })
 vim.keymap.set("n", "<leader>to", function()
-	neotest.output.open({ enter = true })
+	require("neotest").output.open({ enter = true })
 end, { silent = true, desc = "Show test output" })
 vim.keymap.set("n", "<leader>tO", function()
-	neotest.output_panel.toggle()
+	require("neotest").output_panel.toggle()
 end, { silent = true, desc = "Toggle test output panel" })
 vim.keymap.set("n", "<leader>td", function()
 	---@type neotest.run.UserRunArgs
 	local args = { strategy = "dap" }
-	neotest.run.run(args)
+	require("neotest").run.run(args)
 end, { silent = true, desc = "Debug nearest test" })
 vim.keymap.set("n", "<leader>tx", function()
-	neotest.run.stop()
+	require("neotest").run.stop()
 end, { silent = true, desc = "Stop test run" })
 vim.keymap.set("n", "<leader>tw", function()
-	neotest.watch.toggle(vim.fn.expand("%"))
+	require("neotest").watch.toggle(vim.fn.expand("%"))
 end, { silent = true, desc = "Watch test file" })

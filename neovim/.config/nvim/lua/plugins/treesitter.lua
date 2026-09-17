@@ -1,6 +1,4 @@
-local ts = require("nvim-treesitter")
-
-local installed_parsers = {
+local ts_parsers_to_install = {
 	"lua",
 	"go",
 	"gomod",
@@ -30,7 +28,7 @@ local installed_parsers = {
 	"vimdoc",
 }
 
-ts.install(installed_parsers)
+require("nvim-treesitter").install(ts_parsers_to_install)
 
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),

@@ -1,8 +1,4 @@
--- TODO: NOT EXACT YET
-
 local Snacks = require("snacks")
-local gitsigns = require("gitsigns")
-local map = vim.keymap.set
 
 Snacks.setup({
 	picker = {
@@ -26,6 +22,11 @@ Snacks.setup({
 	words = { enabled = true }, -- Uses LSP to highlight references to the symber under the cursor
 	indent = { enabled = true }, -- Draws a vertical line to highlight the scope the cursor is currently inside
 	toggle = { map = vim.keymap.set },
+	styles = {
+		lazygit = {
+			border = "rounded",
+		},
+	},
 })
 
 -- Snacks toggles under <leader>u
@@ -35,42 +36,38 @@ Snacks.toggle.inlay_hints():map("<leader>uh")
 
 -- Explorer and files
 
-map("n", "<leader>e", function()
+vim.keymap.set("n", "<leader>e", function()
 	Snacks.picker.explorer()
 end, { desc = "Explorer" })
 
-map("n", "<leader><space>", function()
+vim.keymap.set("n", "<leader><space>", function()
 	Snacks.picker.files()
 end, { desc = "Files" })
 
-map("n", "<leader>bb", function()
+vim.keymap.set("n", "<leader>bb", function()
 	Snacks.picker.buffers()
 end, { silent = true, desc = "Buffers" })
 
 -- Grep
 
-map({ "n", "x" }, "<leader>sw", function()
+vim.keymap.set({ "n", "x" }, "<leader>sw", function()
 	Snacks.picker.grep_word()
 end, { desc = "Grep word" })
 
-map("n", "<leader>sg", function()
+vim.keymap.set("n", "<leader>sg", function()
 	Snacks.picker.grep({ hidden = true })
 end, { silent = true, desc = "Grep (include hidden files)" })
 
-map("n", "<leader>sG", function()
+vim.keymap.set("n", "<leader>sG", function()
 	Snacks.picker.grep({ hidden = true, ignored = true })
 end, { silent = true, desc = "Grep (include hidden and git-ignored files)" })
 
 -- GIT
 
-map("n", "<leader>gl", function()
+vim.keymap.set("n", "<leader>gl", function()
 	Snacks.picker.git_log()
 end, { silent = true, desc = "Git log" })
 
-map("n", "<leader>gB", function()
-	gitsigns.toggle_current_line_blame()
-end, { silent = true, desc = "Toggle blame" })
-
-map("n", "<leader>gg", function()
+vim.keymap.set("n", "<leader>gg", function()
 	Snacks.lazygit()
 end, { silent = true, desc = "Lazygit" })

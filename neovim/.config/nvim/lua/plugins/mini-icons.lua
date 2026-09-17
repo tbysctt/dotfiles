@@ -1,3 +1,2 @@
-local mini_icons = require("mini.icons")
-mini_icons.setup()
-mini_icons.mock_nvim_web_devicons()
+require("mini.icons").setup()
+require("mini.icons").mock_nvim_web_devicons()

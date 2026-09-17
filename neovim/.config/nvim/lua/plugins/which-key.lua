@@ -1,10 +1,8 @@
-local wk = require("which-key")
-
-wk.setup({
+require("which-key").setup({
 	preset = "helix",
 })
 
-wk.add({
+require("which-key").add({
 	{ "<leader>b", group = "buffers" },
 	{ "<leader>c", group = "code" },
 	{ "<leader>cl", group = "calls" },

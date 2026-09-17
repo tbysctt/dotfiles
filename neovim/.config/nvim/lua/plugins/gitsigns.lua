@@ -4,3 +4,7 @@ require("gitsigns").setup({
 		delay = 500,
 	},
 })
+
+vim.keymap.set("n", "<leader>gB", function()
+	require("gitsigns").toggle_current_line_blame()
+end, { silent = true, desc = "Toggle blame" })
