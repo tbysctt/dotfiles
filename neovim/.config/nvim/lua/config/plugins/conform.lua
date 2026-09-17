@@ -20,15 +20,27 @@ require("conform").setup({
 
 		-- YAML/JSON/TOML/etc
 		yaml = { "prettier" },
-		toml = { "taplo" },
+		toml = {
+			lsp_format = "prefer",
+			name = "taplo",
+		},
 		json = biome_or({ "prettier" }),
 		jsonc = biome_or({ "prettier" }),
 		markdown = { "prettier" },
 
 		-- Shell scripting
-		sh = { "shfmt" },
-		bash = { "shfmt" },
-		zsh = { "shfmt" },
+		sh = {
+			lsp_format = "prefer",
+			name = "bashls",
+		},
+		bash = {
+			lsp_format = "prefer",
+			name = "bashls",
+		},
+		zsh = {
+			lsp_format = "prefer",
+			name = "bashls",
+		},
 
 		-- Programming/Development
 		lua = { "stylua" },

@@ -18,6 +18,7 @@ local mason_packages = {
 	"taplo", -- TOML language server
 	"basedpyright",
 	"bash-language-server", -- Also used for ZSH
+	"shfmt", -- Used by bash-language-server for formatting
 	"tsc",
 	"vtsls", -- The LSP wrapper around the VSCode TypeScript extension
 	"docker-language-server",
@@ -25,7 +26,6 @@ local mason_packages = {
 	-- Formatters for Conform (see config/plugins/conform.lua)
 	"stylua",
 	"prettier",
-	"shfmt",
 	"goimports",
 	"gofumpt",
 	"rustfmt",
