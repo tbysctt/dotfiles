@@ -56,7 +56,8 @@ require("conform").setup({
 			name = "rust-analyzer",
 		},
 		python = {
-			lsp_format = "prefer",
+			"ruff_organize_imports",
+			lsp_format = "last",
 			name = "ruff",
 		},
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
