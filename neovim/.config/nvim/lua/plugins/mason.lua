@@ -26,9 +26,6 @@ local mason_packages = {
 	-- Formatters for Conform (see plugins/conform.lua)
 	"stylua",
 	"prettier",
-	"goimports",
-	"gofumpt",
-	"rustfmt",
 	"biome",
 	"pint",
 	"php-cs-fixer",
