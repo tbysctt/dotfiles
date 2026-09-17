@@ -26,7 +26,6 @@ require("conform").setup({
 		},
 		json = biome_or({ "prettier" }),
 		jsonc = biome_or({ "prettier" }),
-		markdown = { "prettier" },
 
 		-- Shell scripting
 		sh = {
@@ -43,7 +42,11 @@ require("conform").setup({
 		},
 
 		-- Programming/Development
-		lua = { "stylua" },
+		lua = {
+			"stylua",
+			lsp_format = "fallback",
+			name = "lua_ls",
+		},
 		go = {
 			lsp_format = "prefer",
 			name = "gopls",
@@ -52,16 +55,22 @@ require("conform").setup({
 			lsp_format = "prefer",
 			name = "rust-analyzer",
 		},
-		python = { "ruff_organize_imports", "ruff_format" },
+		python = {
+			lsp_format = "prefer",
+			name = "ruff",
+		},
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
-		terraform = { "terraform_fmt" },
-		["terraform-vars"] = { "terraform_fmt" },
 		javascript = biome_or({ "prettier" }),
 		javascriptreact = biome_or({ "prettier" }),
 		typescript = biome_or({ "prettier" }),
 		typescriptreact = biome_or({ "prettier" }),
+
+		-- Others
+		markdown = { "prettier" },
 		html = biome_or({ "prettier" }),
 		css = biome_or({ "prettier" }),
+		terraform = { "terraform_fmt" },
+		["terraform-vars"] = { "terraform_fmt" },
 	},
 })
 
@@ -69,4 +78,4 @@ vim.keymap.set({ "n", "v" }, "<leader>cf", function()
 	require("conform").format({
 		async = true, -- Good for manually triggered buffer formats, doesn't block the Neovim UI
 	})
-end, { desc = "Format buffer/selection" })
+end, { desc = "Format buffer (or visual selection)" })

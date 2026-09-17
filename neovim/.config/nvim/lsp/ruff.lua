@@ -1,10 +1,8 @@
--- Ruff for lint + import organise; basedpyright owns hover/types/defs.
--- Formatting is handled by conform.nvim via ruff_format.
+-- Ruff for lint, format, and import organise; basedpyright owns hover/types/defs.
 return {
 	init_options = {
 		settings = {
 			logLevel = "error",
-			format = { enable = false }, -- conform.nvim handles formatting
 			lint = { enable = true },
 		},
 	},
