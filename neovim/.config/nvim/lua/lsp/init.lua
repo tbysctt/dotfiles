@@ -1,7 +1,7 @@
 vim.diagnostic.config({
-	virtual_text = false,
+	-- virtual_text = true,
 	virtual_lines = { current_line = true },
-	update_in_insert = false,
+	update_in_insert = true,
 	float = {
 		border = "rounded",
 		source = true,
@@ -30,8 +30,6 @@ local enabled_servers = {
 }
 
 vim.lsp.enable(enabled_servers)
-
-require("config.lsp.keymaps")
 
 vim.lsp.config("*", {
 	on_attach = function(client, bufnr)

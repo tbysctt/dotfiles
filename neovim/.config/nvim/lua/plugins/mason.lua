@@ -23,7 +23,7 @@ local mason_packages = {
 	"vtsls", -- The LSP wrapper around the VSCode TypeScript extension
 	"docker-language-server",
 
-	-- Formatters for Conform (see config/plugins/conform.lua)
+	-- Formatters for Conform (see plugins/conform.lua)
 	"stylua",
 	"prettier",
 	"goimports",
