@@ -6,7 +6,6 @@ return {
 			analysis = {
 				typeCheckingMode = "strict",
 				diagnosticMode = "workspace",
-				useLibraryCodeForTypes = true,
 				autoSearchPaths = true,
 				autoImportCompletions = true,
 				inlayHints = {
