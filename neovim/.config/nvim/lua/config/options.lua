@@ -37,6 +37,7 @@ vim.opt.winminwidth = 5
 
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
+vim.opt.autoread = true
 vim.opt.swapfile = false
 vim.opt.timeoutlen = 300
 vim.opt.updatetime = 200
