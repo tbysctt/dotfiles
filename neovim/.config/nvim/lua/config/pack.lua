@@ -13,13 +13,9 @@ local plugins = {
 	{ src = github("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
 
 	github("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
-}
 
-if require("config.env").use_mason() then
-	table.insert(plugins, github("mason-org/mason.nvim"))
-end
+	github("mason-org/mason.nvim"),
 
-vim.list_extend(plugins, {
 	github("stevearc/conform.nvim"),
 	github("mfussenegger/nvim-lint"),
 	github("artemave/workspace-diagnostics.nvim"),
@@ -48,6 +44,6 @@ vim.list_extend(plugins, {
 	github("marilari88/neotest-vitest"),
 	github("akinsho/neotest-go"),
 	github("thenbe/neotest-playwright"),
-})
+}
 
 vim.pack.add(plugins)

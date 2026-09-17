@@ -4,9 +4,7 @@ require("config.colorscheme")
 require("config.keymaps")
 require("config.autocmds")
 
-if require("config.env").use_mason() then
-	require("plugins.mason")
-end
+require("plugins.mason")
 require("plugins.autopairs")
 require("plugins.lazydev")
 require("plugins.blink")

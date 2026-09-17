@@ -1,7 +1,7 @@
 local M = {}
 
-function M.use_mason()
-	local val = vim.env.NEOVIM_USE_MASON
+function M.mason_auto_install()
+	local val = vim.env.NEOVIM_MASON_AUTO_INSTALL
 	if not val or val == "" then
 		return true
 	end
