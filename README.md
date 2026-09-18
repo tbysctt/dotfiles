@@ -64,9 +64,12 @@ This can be launched with `NVIM_APPNAME=lazyvim nvim`, or `lazyvim` if the ZSH c
 Managing multiple installations of Neovim can be messy if not done properly. If things get messy you can clear all installed plugins and their cache like so:
 
 ```sh
-rm -r ~/.local/share/nvim
-rm -r ~/.local/state/nvim
+# Dlete HTTP/LSP downloads, logs and package caches
 rm -r ~/.cache/nvim
+# Deletes Shada (history, registers), swap files, and undo history
+rm -r ~/.local/state/nvim
+# Dletes installed plugins, treesitter parsers and LSP servers
+rm -r ~/.local/share/nvim
 ```
 
 ### Alacritty
@@ -160,7 +163,7 @@ The global config sets `EDITOR=vim`, uses `main` as the default branch, rebases 
 
 - Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
 - Shared config lives in `~/.config/opencode/` (stowed): `opencode.jsonc`, `agents/`, `commands/`, `skills/`, etc.
-- Host-specific overlay is always available at `~/.config/opencode-overlay/` (not committed). ZSHRC creates the directory and sets `OPENCODE_CONFIG_DIR` so OpenCode deep-merges it on top of the base config. Overlay *content* is optional — an empty directory is fine.
+- Host-specific overlay is always available at `~/.config/opencode-overlay/` (not committed). ZSHRC creates the directory and sets `OPENCODE_CONFIG_DIR` so OpenCode deep-merges it on top of the base config. Overlay _content_ is optional — an empty directory is fine.
 
 Layout:
 
