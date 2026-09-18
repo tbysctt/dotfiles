@@ -34,9 +34,7 @@ vim.keymap.set("n", "<leader>tf", function()
 	require("neotest").run.run(vim.fn.expand("%"))
 end, { silent = true, desc = "Run test file" })
 vim.keymap.set("n", "<leader>ta", function()
-	---@type neotest.run.UserRunArgs
-	local args = { suite = true }
-	require("neotest").run.run(args)
+	require("neotest").run.run({ suite = true })
 end, { silent = true, desc = "Run all tests" })
 vim.keymap.set("n", "<leader>tl", function()
 	require("neotest").run.run_last()
@@ -51,9 +49,7 @@ vim.keymap.set("n", "<leader>tO", function()
 	require("neotest").output_panel.toggle()
 end, { silent = true, desc = "Toggle test output panel" })
 vim.keymap.set("n", "<leader>td", function()
-	---@type neotest.run.UserRunArgs
-	local args = { strategy = "dap" }
-	require("neotest").run.run(args)
+	require("neotest").run.run({ strategy = "dap", suite = false })
 end, { silent = true, desc = "Debug nearest test" })
 vim.keymap.set("n", "<leader>tx", function()
 	require("neotest").run.stop()
