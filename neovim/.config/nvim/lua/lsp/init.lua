@@ -17,8 +17,8 @@ vim.lsp.config("*", {
 local enabled_servers = {
 	"lua_ls",
 	"gopls",
-	"tsc", -- Official native LSP included in TypeScript 7
-	-- "vtsls", -- The LSP wrapper around the TypeScript VSCode extension
+	-- "tsc", -- TS7 native LSP; revisit when workspace/diagnostic pull works (see README)
+	"vtsls", -- Push diagnostics; works with workspace-diagnostics.nvim
 	"biome",
 	"eslint",
 	"ruff",

@@ -26,22 +26,32 @@ Open a JS/TS buffer
 │     ├─ Lint:     ESLint LSP (only if an ESLint config exists)
 │     └─ Format:
 │        ├─ Prettier available? → Conform `prettier`
-│        └─ Else                → LSP format from `tsc` or `vtsls`
+│        └─ Else                → TypeScript Language Server
 │
-└─ Types / navigation: always `tsc` (or `vtsls` if enabled)
+└─ Types / navigation: TypeScript Language Server (see below)
 ```
 
 ### Summary
 
-| Project setup            | Diagnostics | Format                                    |
-| ------------------------ | ----------- | ----------------------------------------- |
-| Biome                    | Biome LSP   | `biome-check`                             |
-| ESLint + Prettier        | ESLint LSP  | Prettier                                  |
-| ESLint, no Prettier      | ESLint LSP  | `tsc` / `vtsls`                           |
-| Neither Biome nor ESLint | `tsc` only  | Prettier if present, else `tsc` / `vtsls` |
+| Project setup            | Diagnostics                 | Format                                      |
+| ------------------------ | --------------------------- | ------------------------------------------- |
+| Biome                    | Biome LSP                   | `biome-check`                               |
+| ESLint + Prettier        | ESLint LSP                  | Prettier                                    |
+| ESLint, no Prettier      | ESLint LSP                  | TypeScript Language Server                  |
+| Neither Biome nor ESLint | TypeScript Language Server  | Prettier if present, else TypeScript LSP    |
 
-Neither Biome nor ESLint is used as a Conform/LSP **formatter** when the other path owns formatting: both servers have formatting capabilities disabled so Conform (or `tsc` fallback) is the single format path.
+Neither Biome nor ESLint is used as a Conform/LSP **formatter** when the other path owns formatting: both servers have formatting capabilities disabled so Conform (or the TypeScript Language Server as fallback) is the single format path.
 
 ### Related filetypes
 
 JSON / HTML / CSS use the same Biome-vs-Prettier split for **formatting** (`biome-check` vs `prettier`). YAML and Markdown stay Prettier-only.
+
+### Which TypeScript Language Server (for now)
+
+TypeScript 7 ships a native LSP (`tsc --lsp`). This config still uses **vtsls** (the VS Code TypeScript server wrapper) for JS/TS types, navigation, and format fallback.
+
+Reason: project-wide diagnostics use [`workspace-diagnostics.nvim`](https://github.com/artemave/workspace-diagnostics.nvim), which opens workspace files via fake `textDocument/didOpen` and relies on **push** diagnostics (`publishDiagnostics`). That works with vtsls and servers like Tailwind.
+
+The native TypeScript LSP is **pull-diagnostics only** and does not yet expose usable `workspace/diagnostic` pull for the whole project. With it, errors in files you have not opened never show up in `<leader>sd` / workspace diagnostic lists.
+
+Keep [`lsp/tsc.lua`](lsp/tsc.lua) around and switch `enabled_servers` back to the native LSP once upstream workspace pull diagnostics work with Neovim.
