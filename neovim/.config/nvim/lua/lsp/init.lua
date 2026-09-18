@@ -19,6 +19,7 @@ local enabled_servers = {
 	"gopls",
 	"tsc", -- Official native LSP included in TypeScript 7
 	-- "vtsls", -- The LSP wrapper around the TypeScript VSCode extension
+	"biome",
 	"eslint",
 	"ruff",
 	"intelephense",
@@ -34,6 +35,17 @@ local enabled_servers = {
 
 vim.lsp.enable(enabled_servers)
 
+-- Do not attach ESLint when the project uses Biome.
+local eslint_root = vim.lsp.config.eslint.root_dir
+vim.lsp.config("eslint", {
+	root_dir = function(bufnr, on_dir)
+		if vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) then
+			return
+		end
+		return eslint_root(bufnr, on_dir)
+	end,
+})
+
 -- LspAttach so shared logic is not overwritten by per-server on_attach.
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("config.lsp", { clear = true }),
@@ -42,8 +54,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if not client then
 			return
 		end
-		-- ESLint buffer diagnostics are enough; workspace scan is heavy in JS monorepos.
-		if client.name == "eslint" then
+		-- Workspace scan is heavy in JS/TS monorepos, buffer diagnostics are enough
+		if client.name == "eslint" or client.name == "biome" then
 			return
 		end
 		local bufnr = event.buf

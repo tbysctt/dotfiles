@@ -9,6 +9,20 @@ local function biome_or(fallback)
 	end
 end
 
+-- Biome → Prettier → tsc/vtsls LSP format.
+local function js_ts_formatters(bufnr)
+	if has_biome(bufnr) then
+		return { "biome-check" }
+	end
+	return {
+		"prettier",
+		lsp_format = "fallback",
+		filter = function(client)
+			return client.name == "tsc" or client.name == "vtsls"
+		end,
+	}
+end
+
 require("conform").setup({
 	default_format_opts = {
 		lsp_format = "fallback", -- If no formatter is configured for the file type, fall back to the LSP (if one is available)
@@ -61,10 +75,10 @@ require("conform").setup({
 			name = "ruff",
 		},
 		php = { "pint", "php_cs_fixer", stop_after_first = true },
-		javascript = biome_or({ "prettier" }),
-		javascriptreact = biome_or({ "prettier" }),
-		typescript = biome_or({ "prettier" }),
-		typescriptreact = biome_or({ "prettier" }),
+		javascript = js_ts_formatters,
+		javascriptreact = js_ts_formatters,
+		typescript = js_ts_formatters,
+		typescriptreact = js_ts_formatters,
 
 		-- Others
 		markdown = { "prettier" },
