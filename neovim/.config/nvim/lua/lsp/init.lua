@@ -42,7 +42,9 @@ vim.lsp.config("eslint", {
 		if vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) then
 			return
 		end
-		return eslint_root(bufnr, on_dir)
+		if eslint_root then
+			return eslint_root(bufnr, on_dir)
+		end
 	end,
 })
 
