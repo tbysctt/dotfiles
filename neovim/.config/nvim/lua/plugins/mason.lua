@@ -45,6 +45,7 @@ if require("config.env").mason_auto_install() then
 		-- DAP adapters (see plugins/dap.lua)
 		"delve",
 		"debugpy",
+		"js-debug-adapter",
 	}
 
 	local registry = require("mason-registry")

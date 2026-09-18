@@ -7,6 +7,38 @@ require("dap-go").setup()
 local debugpy = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
 require("dap-python").setup(debugpy)
 
+-- js-debug (vscode-js-debug); required by neotest-vitest/jest (type = "pwa-node").
+-- Mason and system installs both expose `js-debug-adapter` on PATH.
+dap.adapters["pwa-node"] = {
+	type = "server",
+	host = "127.0.0.1",
+	port = "${port}",
+	executable = {
+		command = "js-debug-adapter",
+		args = { "${port}", "127.0.0.1" },
+	},
+}
+
+local js_config = {
+	{
+		type = "pwa-node",
+		request = "launch",
+		name = "Launch file",
+		program = "${file}",
+		cwd = "${workspaceFolder}",
+	},
+	{
+		type = "pwa-node",
+		request = "attach",
+		name = "Attach",
+		processId = require("dap.utils").pick_process,
+		cwd = "${workspaceFolder}",
+	},
+}
+for _, language in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
+	dap.configurations[language] = js_config
+end
+
 require("dap-view").setup({
 	auto_toggle = true,
 })
