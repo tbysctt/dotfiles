@@ -34,6 +34,10 @@ if require("config.env").mason_auto_install() then
 
 		-- Linters for nvim-lint
 		"hadolint",
+
+		-- DAP adapters (see plugins/dap.lua)
+		"delve",
+		"debugpy",
 	}
 
 	local registry = require("mason-registry")

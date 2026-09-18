@@ -4,6 +4,7 @@ require("config.colorscheme")
 require("config.autocmds")
 
 require("plugins.mason")
+require("plugins.dap")
 require("plugins.autopairs")
 require("plugins.lazydev")
 require("plugins.blink")

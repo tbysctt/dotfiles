@@ -45,6 +45,12 @@ local plugins = {
 	github("windwp/nvim-autopairs"),
 	github("kylechui/nvim-surround"),
 
+	-- DAP (debugger); language helpers and UI depend on nvim-dap
+	github("mfussenegger/nvim-dap"),
+	github("leoluz/nvim-dap-go"),
+	github("mfussenegger/nvim-dap-python"),
+	{ src = github("igorlfs/nvim-dap-view"), version = vim.version.range("1") },
+
 	github("nvim-neotest/nvim-nio"),
 	github("nvim-neotest/neotest"),
 	github("nvim-neotest/neotest-python"),

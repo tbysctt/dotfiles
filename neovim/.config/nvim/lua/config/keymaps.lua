@@ -1,8 +1,5 @@
 local Snacks = require("snacks")
-
-local map = function(mode, lhs, rhs, desc)
-	vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
-end
+local map = require("config.map")
 
 map("n", "<leader>bd", function()
 	Snacks.bufdelete()

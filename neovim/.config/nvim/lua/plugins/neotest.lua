@@ -50,6 +50,11 @@ end, { silent = true, desc = "Show test output" })
 vim.keymap.set("n", "<leader>tO", function()
 	require("neotest").output_panel.toggle()
 end, { silent = true, desc = "Toggle test output panel" })
+vim.keymap.set("n", "<leader>td", function()
+	---@type neotest.run.UserRunArgs
+	local args = { strategy = "dap" }
+	require("neotest").run.run(args)
+end, { silent = true, desc = "Debug nearest test" })
 vim.keymap.set("n", "<leader>tx", function()
 	require("neotest").run.stop()
 end, { silent = true, desc = "Stop test run" })
