@@ -65,9 +65,11 @@ Snacks.keymap.set({ "n", "x" }, "<leader>cc", vim.lsp.codelens.run, {
 	lsp = { method = "textDocument/codeLens" },
 	desc = "Run codelens",
 })
-Snacks.keymap.set("n", "<leader>cC", vim.lsp.codelens.refresh, {
+Snacks.keymap.set("n", "<leader>cC", function()
+	vim.lsp.codelens.enable(true)
+end, {
 	lsp = { method = "textDocument/codeLens" },
-	desc = "Refresh & Display Codelens",
+	desc = "Enable Codelens",
 })
 Snacks.keymap.set("n", "<leader>cl", function()
 	Snacks.picker.lsp_config()
