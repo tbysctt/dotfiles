@@ -35,9 +35,7 @@ Note that Stow's default target is actually the parent directory of the current 
 
 A modern configuration of Neovim, requiring at least 0.12.x as it uses the new built-in `vim.pack` package manager.
 
-It uses Mason for installing LSPs, unless `NEOVIM_USE_MASON` is set to `false`, in which case Mason will not be configured or used at all. In that case, you'll need to manually install any tools you wish to use.
-
-It also supports an HTTP proxy URL to be set via the `NEOVIM_HTTP_PROXY` environment variable. This allows the same config to be used on corporate machines that require an HTTP proxy for any web fetch requests, such as for fetching schemas for YAML LS and JSON LS.
+More information/documentation [available here](neovim/.config/nvim/README.md).
 
 ### LazyVim
 
