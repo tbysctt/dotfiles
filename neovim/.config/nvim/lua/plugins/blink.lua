@@ -4,9 +4,9 @@ require("blink.cmp").setup({
 	},
 
 	completion = {
-		documentation = { auto_show = true, auto_show_delay_ms = 200, window = { border = "single" } },
+		documentation = { auto_show = true, auto_show_delay_ms = 200, window = { border = "rounded" } },
 		menu = {
-			border = "single",
+			border = "rounded",
 			draw = {
 				columns = {
 					{ "item_idx" },
@@ -48,5 +48,5 @@ require("blink.cmp").setup({
 		implementation = "rust",
 	},
 
-	signature = { enabled = true, window = { border = "single" } },
+	signature = { enabled = true, window = { border = "rounded" } },
 })
