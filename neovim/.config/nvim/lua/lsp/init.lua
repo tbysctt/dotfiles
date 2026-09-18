@@ -19,6 +19,7 @@ local enabled_servers = {
 	"gopls",
 	"tsc", -- Official native LSP included in TypeScript 7
 	-- "vtsls", -- The LSP wrapper around the TypeScript VSCode extension
+	"eslint",
 	"ruff",
 	"intelephense",
 	"yamlls",
@@ -39,6 +40,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(event)
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		if not client then
+			return
+		end
+		-- ESLint buffer diagnostics are enough; workspace scan is heavy in JS monorepos.
+		if client.name == "eslint" then
 			return
 		end
 		local bufnr = event.buf

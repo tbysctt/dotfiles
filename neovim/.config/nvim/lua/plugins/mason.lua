@@ -22,6 +22,7 @@ if require("config.env").mason_auto_install() then
 		"shfmt", -- Used by bash-language-server for formatting
 		"tsc",
 		"vtsls", -- The LSP wrapper around the VSCode TypeScript extension
+		"eslint-lsp", -- vscode-eslint-language-server (diagnostics; project eslint)
 		"docker-language-server",
 
 		-- Formatters for Conform (see plugins/conform.lua)
