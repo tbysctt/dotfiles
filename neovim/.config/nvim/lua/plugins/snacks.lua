@@ -44,9 +44,13 @@ vim.keymap.set("n", "<leader><space>", function()
 	Snacks.picker.files()
 end, { desc = "Files" })
 
-vim.keymap.set("n", "<leader>bb", function()
+vim.keymap.set("n", "<leader>,", function()
 	Snacks.picker.buffers()
-end, { silent = true, desc = "Buffers" })
+end, { desc = "Buffers" })
+
+vim.keymap.set("n", "<leader>fb", function()
+	Snacks.picker.buffers()
+end, { desc = "Buffers" })
 
 -- Grep
 
@@ -67,7 +71,28 @@ end, { silent = true, desc = "Grep (include hidden and git-ignored files)" })
 vim.keymap.set("n", "<leader>gl", function()
 	Snacks.picker.git_log()
 end, { silent = true, desc = "Git log" })
+-- vim.keymap.set("n", "<leader>gl", function()
+-- 	Snacks.picker.git_log()
+-- end, { desc = "Git Log" })
 
 vim.keymap.set("n", "<leader>gg", function()
 	Snacks.lazygit()
 end, { silent = true, desc = "Lazygit" })
+
+vim.keymap.set("n", "<leader>gb", function()
+	Snacks.picker.git_log_line()
+end, { desc = "Git Blame Line" })
+vim.keymap.set("n", "<leader>gf", function()
+	Snacks.picker.git_log_file()
+end, { desc = "Git Current File History" })
+vim.keymap.set({ "n", "x" }, "<leader>gB", function()
+	Snacks.gitbrowse()
+end, { desc = "Git Browse (open)" })
+vim.keymap.set({ "n", "x" }, "<leader>gY", function()
+	Snacks.gitbrowse({
+		open = function(url)
+			vim.fn.setreg("+", url)
+		end,
+		notify = false,
+	})
+end, { desc = "Git Browse (copy)" })
