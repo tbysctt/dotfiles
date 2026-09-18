@@ -30,6 +30,9 @@ local ts_parsers_to_install = {
 
 require("nvim-treesitter").install(ts_parsers_to_install)
 
+-- Compound filetype used for GitHub Actions workflows (see plugins/lint.lua).
+vim.treesitter.language.register("yaml", "yaml.ghaction")
+
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
 	callback = function(event)

@@ -34,6 +34,7 @@ require("conform").setup({
 
 		-- YAML/JSON/TOML/etc
 		yaml = { "prettier" },
+		["yaml.ghaction"] = { "prettier" },
 		toml = {
 			lsp_format = "prefer",
 			name = "taplo",

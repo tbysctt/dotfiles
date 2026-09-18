@@ -78,6 +78,8 @@ export PATH=$PATH:/usr/local/go/bin
 # This is where Go installs things to (ie. lazygit) with "go install"
 export PATH="$HOME/go/bin:$PATH"
 
+export GITHUB_TOKEN=$(gh auth token) # The current token GitHub CLi is using
+
 # User configuration
 export VISUAL="nvim"
 export EDITOR="vim"

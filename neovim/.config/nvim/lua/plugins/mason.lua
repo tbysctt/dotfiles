@@ -23,6 +23,7 @@ if require("config.env").mason_auto_install() then
 		"tsc",
 		"vtsls", -- The LSP wrapper around the VSCode TypeScript extension
 		"eslint-lsp", -- vscode-eslint-language-server (diagnostics; project eslint)
+		"gh-actions-language-server", -- GitHub Actions hover/completion
 		"docker-language-server",
 
 		-- Formatters for Conform (see plugins/conform.lua)

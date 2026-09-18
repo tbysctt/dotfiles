@@ -18,4 +18,13 @@ function M.http_proxy_url()
 	return val
 end
 
+-- Token for gh_actions_ls richer completions/validation (repo + workflow scopes).
+function M.github_token()
+	local val = vim.env.GH_TOKEN or vim.env.GITHUB_TOKEN
+	if not val or val == "" then
+		return nil
+	end
+	return val
+end
+
 return M

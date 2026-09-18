@@ -24,6 +24,7 @@ local enabled_servers = {
 	"ruff",
 	"intelephense",
 	"yamlls",
+	"gh_actions_ls", -- Hover/completion for GitHub Actions workflows
 	"jsonls",
 	"terraformls",
 	"tailwindcss",
@@ -32,6 +33,15 @@ local enabled_servers = {
 	"bashls",
 	"docker_language_server",
 }
+
+-- Programmatic override: nvim-lspconfig's later rtp file would replace
+-- filetypes/init_options from lsp/gh_actions_ls.lua (workflows use yaml.ghaction).
+vim.lsp.config("gh_actions_ls", {
+	filetypes = { "yaml", "yaml.ghaction" },
+	init_options = {
+		sessionToken = require("config.env").github_token(),
+	},
+})
 
 vim.lsp.enable(enabled_servers)
 
@@ -57,7 +67,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			return
 		end
 		-- Workspace scan is heavy in JS/TS monorepos, buffer diagnostics are enough
-		if client.name == "eslint" or client.name == "biome" then
+		if client.name == "eslint" or client.name == "biome" or client.name == "gh_actions_ls" then
 			return
 		end
 		local bufnr = event.buf
