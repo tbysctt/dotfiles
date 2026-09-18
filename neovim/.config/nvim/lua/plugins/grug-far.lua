@@ -13,4 +13,4 @@ end, { silent = true, desc = "Search/replace selection" })
 
 vim.keymap.set("n", "<leader>sR", function()
 	require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })
-end, { silent = true, desc = "Seach/replace in file" })
+end, { silent = true, desc = "Search/replace in file" })

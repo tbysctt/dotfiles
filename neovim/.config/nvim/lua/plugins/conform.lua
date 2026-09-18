@@ -75,7 +75,7 @@ require("conform").setup({
 	},
 })
 
-vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+vim.keymap.set({ "n", "x" }, "<leader>cf", function()
 	require("conform").format({
 		async = true, -- Good for manually triggered buffer formats, doesn't block the Neovim UI
 	})

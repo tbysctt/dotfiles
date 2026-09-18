@@ -10,9 +10,17 @@ local plugins = {
 	github("echasnovski/mini.icons"),
 	github("folke/ts-comments.nvim"),
 
-	{ src = github("Saghen/blink.cmp"), version = vim.version.range("1") }, -- Pinned to v1.x for pre-built fuzzy binary
+	{
+		src = github("Saghen/blink.cmp"),
+		version = vim.version.range("1"), -- Pinned to v1.x for pre-built fuzzy binary
+	},
 
 	github("neovim/nvim-lspconfig"), -- I use Neovim's native vim.lsp, but this dep provides the lsp/<server>.lua config files that vim.lsp.enable() reads because the Neovim core ships none.
+
+	{
+		src = github("mrcjkb/rustaceanvim"), -- Rust LSP via rust-analyzer; do not also enable rust-analyzer with vim.lsp.enable
+		version = vim.version.range("^9"), -- Maintainer recommends pinning to a version to avoid being surprised by breaking changes
+	},
 
 	github("mason-org/mason.nvim"),
 

@@ -1,7 +1,6 @@
 require("config.options")
 require("config.pack")
 require("config.colorscheme")
-require("config.keymaps")
 require("config.autocmds")
 
 require("plugins.mason")
@@ -22,6 +21,10 @@ require("plugins.todo-comments")
 require("plugins.treesitter")
 require("plugins.ts-comments")
 require("plugins.which-key")
+require("plugins.rustaceanvim")
+
+-- After Snacks.setup so keymaps that require("snacks") see a configured instance.
+require("config.keymaps")
 
 require("lsp")
 require("lsp.keymaps")

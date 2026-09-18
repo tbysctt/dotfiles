@@ -3,7 +3,7 @@ vim.o.winborder = "rounded"
 vim.diagnostic.config({
 	-- virtual_text = true,
 	virtual_lines = { current_line = true },
-	update_in_insert = true,
+	update_in_insert = false,
 	float = {
 		border = "rounded",
 		source = true,
@@ -33,8 +33,15 @@ local enabled_servers = {
 
 vim.lsp.enable(enabled_servers)
 
-vim.lsp.config("*", {
-	on_attach = function(client, bufnr)
+-- LspAttach so shared logic is not overwritten by per-server on_attach.
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("config.lsp", { clear = true }),
+	callback = function(event)
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if not client then
+			return
+		end
+		local bufnr = event.buf
 		-- some clients support workspace diagnostics natively
 		if client:supports_method("workspace/diagnostic", bufnr) then
 			vim.lsp.buf.workspace_diagnostics({ client_id = client.id })

@@ -19,7 +19,7 @@ Snacks.setup({
 	quickfile = { enabled = true },
 	scroll = { enabled = true }, -- Smooth scrolling
 	statuscolumn = { enabled = true },
-	words = { enabled = true }, -- Uses LSP to highlight references to the symber under the cursor
+	words = { enabled = true }, -- Uses LSP to highlight references to the symbol under the cursor
 	indent = { enabled = true }, -- Draws a vertical line to highlight the scope the cursor is currently inside
 	toggle = { map = vim.keymap.set },
 	styles = {
