@@ -78,8 +78,6 @@ export PATH=$PATH:/usr/local/go/bin
 # This is where Go installs things to (ie. lazygit) with "go install"
 export PATH="$HOME/go/bin:$PATH"
 
-export GITHUB_TOKEN=$(gh auth token) # The current token GitHub CLi is using
-
 # User configuration
 export VISUAL="nvim"
 export EDITOR="vim"
@@ -150,6 +148,8 @@ alias cdh='cd_fzf ~'
 
 REPOS_DIR="$HOME/git"
 alias cdd='cd_fzf "$REPOS_DIR" 2'
+
+export GITHUB_TOKEN=$(gh auth token) # The current token GitHub CLi is using
 
 # Yazi shell wrapper that provides the ability to change the CWD when exiting Yazi. Exit with "q" to change, exit with "Q" to not change.
 # See: https://github.com/yazi-rs/yazi-rs.github.io/blob/main/versioned_docs/version-26.5.6/quick-start.md?plain=1#L19
