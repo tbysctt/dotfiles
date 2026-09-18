@@ -35,6 +35,11 @@ if require("config.env").mason_auto_install() then
 
 		-- Linters for nvim-lint
 		"hadolint",
+		"selene",
+		"shellcheck",
+		"golangci-lint",
+		"actionlint",
+		"tflint",
 
 		-- DAP adapters (see plugins/dap.lua)
 		"delve",
