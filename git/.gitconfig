@@ -7,7 +7,7 @@
 	name = Toby Scott
 	email = toby@tobyscott.dev
 [core]
-  editor = vim
+  editor = nvim
 	excludesfile = $HOME/.gitignore_global
 [init]
 	defaultBranch = main
