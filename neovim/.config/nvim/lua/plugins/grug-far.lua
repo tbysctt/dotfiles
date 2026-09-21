@@ -1,5 +1,9 @@
 require("grug-far").setup({
-	extraRgArgs = "--hidden --no-ignore",
+	engines = {
+		ripgrep = {
+			extraArgs = "--hidden",
+		},
+	},
 	windowCreationCommand = "split",
 })
 
