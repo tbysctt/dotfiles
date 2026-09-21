@@ -1,20 +1,26 @@
 require("grug-far").setup({
+	headerMaxWidth = 80,
 	engines = {
 		ripgrep = {
 			extraArgs = "--hidden",
 		},
 	},
-	windowCreationCommand = "split",
+	windowCreationCommand = "split", -- keep your horizontal split preference
 })
 
-vim.keymap.set("n", "<leader>sr", function()
-	require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
-end, { silent = true, desc = "Search/replace" })
-
-vim.keymap.set("x", "<leader>sr", function()
-	require("grug-far").with_visual_selection({ prefills = { paths = vim.fn.expand("%") } })
-end, { silent = true, desc = "Search/replace selection" })
+vim.keymap.set({ "n", "x" }, "<leader>sr", function()
+	local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+	require("grug-far").open({
+		transient = true,
+		prefills = {
+			filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+		},
+	})
+end, { silent = true, desc = "Search and Replace" })
 
 vim.keymap.set("n", "<leader>sR", function()
-	require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })
+	require("grug-far").open({
+		transient = true,
+		prefills = { paths = vim.fn.expand("%") },
+	})
 end, { silent = true, desc = "Search/replace in file" })
