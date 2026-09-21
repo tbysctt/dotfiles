@@ -22,7 +22,6 @@ local ts_parsers_to_install = {
 	"bash",
 	"toml",
 	"sql",
-	"dockerfile",
 	"gitcommit",
 	"vim",
 	"vimdoc",
