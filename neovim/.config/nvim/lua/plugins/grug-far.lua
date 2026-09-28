@@ -5,7 +5,7 @@ require("grug-far").setup({
 			extraArgs = "--hidden",
 		},
 	},
-	windowCreationCommand = "split", -- keep your horizontal split preference
+	windowCreationCommand = "botright vsplit", -- vertical split, forced to far right
 })
 
 vim.keymap.set({ "n", "x" }, "<leader>sr", function()
