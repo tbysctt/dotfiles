@@ -67,7 +67,6 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:$HOME/bin"
 
 # OpenCode
-export PATH="$HOME/.opencode/bin:$PATH"
 # Host-specific overlay (agents/skills/commands/opencode.jsonc). Directory is
 # always present so OPENCODE_CONFIG_DIR is safe; content is optional.
 mkdir -p "$HOME/.config/opencode-overlay"
