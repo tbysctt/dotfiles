@@ -94,6 +94,11 @@ if command -v kubectl &>/dev/null; then
     source <(kubectl completion zsh)
 fi
 
+if command -v aws_completer &>/dev/null; then
+    autoload -Uz bashcompinit && bashcompinit # Uses bash-style completion via aws_completer
+    complete -C "$(command -v aws_completer)" aws
+fi
+
 # Aliases
 alias nv=nvim
 alias lazyvim="NVIM_APPNAME=lazyvim nvim"
