@@ -99,6 +99,10 @@ if command -v aws_completer &>/dev/null; then
     complete -C "$(command -v aws_completer)" aws
 fi
 
+if command -v fzf &>/dev/null; then
+    source <(fzf --zsh) # Adds Ctrl+R, Ctrl+T, Alt+C bindings
+fi
+
 # Aliases
 alias nv=nvim
 alias lazyvim="NVIM_APPNAME=lazyvim nvim"
@@ -169,22 +173,7 @@ function y() {
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, but for the sake of initial shell startup time, it skips checking for any .nvmrc file to auto-use a particular version
 
-# Python shit
-# export PYENV_ROOT="$HOME/.pyenv"
-# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init - zsh)"
-# export PATH="$HOME/.local/bin:$PATH"
-
 # Functions
-
-if command -v fzf &>/dev/null; then
-    source <(fzf --zsh)
-    function fzcd() {
-        local dir
-        local search_dir="${1:-$HOME}" # Default to $HOME if no argument is provided
-        dir=$(find "$search_dir" -type d | fzf) && cd "$dir"
-    }
-fi
 
 # Clipboard copy/paste functions that use the correct tool under the hood, depending on the environment (ie. MacOS, Linux X11 or Linux Wayland).
 # Use these functions as drop-in replacements, for example:
