@@ -36,3 +36,6 @@ end)
 map("n", "<down>", function()
 	vim.notify("Use j to move down!", vim.log.levels.WARN, { title = "Navigation Hint" })
 end)
+
+vim.keymap.set("v", ">", ">gv", { desc = "Indent right and keep selection" })
+vim.keymap.set("v", "<", "<gv", { desc = "Indent left and keep selection" })
