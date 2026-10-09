@@ -34,6 +34,13 @@ zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged
 
 # Explicitly set keybind mode to emacs because ZSH will use vi mode when the EDITOR env var includes "vi"
 bindkey -e
+
+# Prefix-based history search
+bindkey "^[[A" up-line-or-search
+bindkey "^[OA" up-line-or-search
+bindkey "^[[B" down-line-or-search
+bindkey "^[OB" down-line-or-search
+
 KEYMAP_VALUE=""
 
 function zle-line-init {
