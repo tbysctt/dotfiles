@@ -12,251 +12,29 @@ setopt HIST_REDUCE_BLANKS
 
 set -o interactive_comments
 
-# Initialise the Zsh completion system, enabling tab completion for commands, arguments, filenames, and repository elements like Git branches and remotes.
-autoload -Uz compinit
-
-# Check the cache once a day rather than every time
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.m-1) ]]; then
-    compinit -C
-else
-    compinit
-fi
-
-# Add version control support
-autoload -Uz add-zsh-hook vcs_info
-setopt prompt_subst # Enable prompt substitution for variable expansion
-add-zsh-hook precmd vcs_info
-zstyle ':vcs_info:git:*' formats ' %b %u%c'            # %u = unstaged changes, %c = staged changes, %b = branch name
-zstyle ':vcs_info:git:*' actionformats ' %b (%a) %u%c' # %a = action git is currently performing ("merge" or "rebase")
-zstyle ':vcs_info:git:*' unstagedstr '* '
-zstyle ':vcs_info:git:*' stagedstr '+ '
-zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
-
 # Explicitly set keybind mode to emacs because ZSH will use vi mode when the EDITOR env var includes "vi"
 bindkey -e
 
-# Prefix-based history search
-bindkey "^[[A" up-line-or-search
-bindkey "^[OA" up-line-or-search
-bindkey "^[[B" down-line-or-search
-bindkey "^[OB" down-line-or-search
+# Shared modules
+source ~/.zsh/completion.zsh
+source ~/.zsh/prompt.zsh
+source ~/.zsh/path.zsh
+source ~/.zsh/env.zsh
+source ~/.zsh/aliases.zsh
+source ~/.zsh/functions.zsh
 
-KEYMAP_VALUE=""
-
-function zle-line-init {
-    if [[ ${KEYMAP} == vicmd ]]; then
-        KEYMAP_VALUE="%F{red}[vicmd]%f"
-    else
-        KEYMAP_VALUE=""
-    fi
-    zle reset-prompt
-}
-
-function zle-keymap-select {
-    KEYMAP_VALUE=$KEYMAP
-    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-        KEYMAP_VALUE="%F{red}[vicmd]%f"
-    else
-        KEYMAP_VALUE=""
-    fi
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-
-PROMPT='%F{blue}%1~%f ${vcs_info_msg_0_}%# '
-RPROMPT="${KEYMAP_VALUE} %(?.%F{green}✓.%F{red}×)%f %n@%m ($(uname -s))"
-
-export TOOLBOX_IMAGE=ghcr.io/tbysctt/toolbox:latest
-
-# Add personal local binaries to PATH
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:$HOME/bin"
-
-# OpenCode
-# Host-specific overlay (agents/skills/commands/opencode.jsonc). Directory is
-# always present so OPENCODE_CONFIG_DIR is safe; content is optional.
-mkdir -p "$HOME/.config/opencode-overlay"
-export OPENCODE_CONFIG_DIR="$HOME/.config/opencode-overlay"
-
-# From the Go docs, adds "go" command to path
-export PATH=$PATH:/usr/local/go/bin
-# This is where Go installs things to (ie. lazygit) with "go install"
-export PATH="$HOME/go/bin:$PATH"
-
-# User configuration
-export VISUAL="nvim"
-export EDITOR="vim"
-
-if [[ "$(uname -s)" == "Darwin" ]]; then
-    # Set PATH, MANPATH, etc., for Homebrew.
-    export PATH="/opt/homebrew/bin:$PATH"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-
-    # Mac-specific aliases
-    alias chrome-no-cors='open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome_dev"'
-fi
-
-if command -v kubectl &>/dev/null; then
-    source <(kubectl completion zsh)
-fi
-
-if command -v aws_completer &>/dev/null; then
-    autoload -Uz bashcompinit && bashcompinit # Uses bash-style completion via aws_completer
-    complete -C "$(command -v aws_completer)" aws
-fi
-
-if command -v fzf &>/dev/null; then
-    source <(fzf --zsh) # Adds Ctrl+R, Ctrl+T, Alt+C bindings
-fi
-
-# Aliases
-alias nv=nvim
-alias lazyvim="NVIM_APPNAME=lazyvim nvim"
-alias tf=terraform
-alias cf=codefresh
-alias t=tmux
-alias nf=fastfetch # fastfetch is a much faster neofetch alternative
-alias lg=lazygit
-
-alias ssh="TERM=xterm-256color ssh" # Usually remote machines don't understand the "alacritty" TERM type.
-alias diff='diff --color=always'
-
-alias l="ls -al --color=auto"
-
-alias ga="git add"
-alias gc="git commit"
-alias gst="git status -uall --short --branch" # uall shows all files inside untracked directories
-alias gsw="git switch"
-alias glo='git log --pretty=format:"%C(yellow)%h%Creset %C(green)%an%Creset %C(blue)(%cr)%Creset %s" --date=format:"%a %d-%m-%Y %H:%M" --graph'
-
-alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
-alias linguist='docker run -t --rm -v $(pwd):/repo:ro crazymax/linguist'
-
-# Use a subshell so we go back to the original directory once Neovim exits
-alias dots="(cd $HOME/dotfiles && nvim)"
-
-alias k=kubectl
-alias kdebug='kubectl run $(whoami)-debug --rm=true --restart=Never --image=$TOOLBOX_IMAGE --stdin=true --tty=true --pod-running-timeout=10m0s --annotations="cluster-autoscaler.kubernetes.io/safe-to-evict=true"'
-
-FZF_CD_IGNORE=(node_modules .git .venv venv __pycache__ dist build target .next .cache)
-
-function cd_fzf() {
-    local search_dir="${1:-.}"
-    local max_depth="${2:-}"
-    local exclude_args=()
-    for pattern in "${FZF_CD_IGNORE[@]}"; do
-        exclude_args+=(--exclude "$pattern")
-    done
-    local depth_args=()
-    [[ -n "$max_depth" ]] && depth_args=(--max-depth "$max_depth")
-
-    local selected_dir
-    selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" |
-        fzf +m --height 50% --preview 'tree -C {}')
-    if [[ -n "$selected_dir" ]]; then
-        cd "$selected_dir" || return 1
-    fi
-}
-
-alias cdh='cd_fzf ~'
-
-REPOS_DIR="$HOME/git"
-alias cdd='cd_fzf "$REPOS_DIR" 2'
-
-export GITHUB_TOKEN=$(gh auth token) # The current token GitHub CLi is using
-
-# Yazi shell wrapper that provides the ability to change the CWD when exiting Yazi. Exit with "q" to change, exit with "Q" to not change.
-# See: https://github.com/yazi-rs/yazi-rs.github.io/blob/main/versioned_docs/version-26.5.6/quick-start.md?plain=1#L19
-function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    command yazi "$@" --cwd-file="$tmp"
-    IFS= read -r -d '' cwd <"$tmp"
-    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-    command rm -f -- "$tmp"
-}
-
-# Node Version Manager
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, but for the sake of initial shell startup time, it skips checking for any .nvmrc file to auto-use a particular version
-
-# Functions
-
-# Clipboard copy/paste functions that use the correct tool under the hood, depending on the environment (ie. MacOS, Linux X11 or Linux Wayland).
-# Use these functions as drop-in replacements, for example:
-# echo "Hello World" | cpc
-# cbp > new_file.txt
-
-cbc() {
-    case "$(uname -s)" in
-    Darwin) pbcopy ;;
-    Linux)
-        if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
-            wl-copy
-        elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
-            xclip -selection clipboard
-        elif [ -n "$DISPLAY" ] && command -v xsel >/dev/null 2>&1; then
-            xsel --clipboard --input
-        else
-            echo "cbc: no clipboard tool found" >&2
-            return 1
-        fi
-        ;;
-    *)
-        echo "cbc: unsupported OS" >&2
-        return 1
-        ;;
-    esac
-}
-
-cbp() {
-    case "$(uname -s)" in
-    Darwin) pbpaste ;;
-    Linux)
-        if [ -n "$WAYLAND_DISPLAY" ] && command -v wl-paste >/dev/null 2>&1; then
-            wl-paste
-        elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
-            xclip -selection clipboard -o
-        elif [ -n "$DISPLAY" ] && command -v xsel >/dev/null 2>&1; then
-            xsel --clipboard --output
-        else
-            echo "cbc: no clipboard tool found" >&2
-            return 1
-        fi
-        ;;
-    *)
-        echo "cbc: unsupported OS" >&2
-        return 1
-        ;;
-    esac
-}
-
-# Enable GPG signing for Git commits
-export GPG_TTY=$(tty)
-
-# Source the host-specific extras if there is a file for it
+# Host-specific overlay (not committed)
 [ -f ~/.zsh/extra.zsh ] && source ~/.zsh/extra.zsh
 
 # Niceties for interactive shell experience, making it similar to Fish shell.
 [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh                     # Must be sourced last
-[ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh # Must be sourced last
+[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ] && source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-# Scripts to setup experiment environments in a temporary directory
-
-go-experiment() {
-    cd $(mktemp -d)
-    go mod init example.com/go-experiment
-    git init
-    touch main.go
-    nv
-}
-
-py-experiment() {
-    cd $(mktemp -d)
-    poetry new . --name "experiment"
-    git init
-    nv
-}
+# Fish-like substring history search (must be bound after the plugin is loaded)
+bindkey "^[[A" history-substring-search-up
+bindkey "^[OA" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+bindkey "^[OB" history-substring-search-down
 
 # zprof

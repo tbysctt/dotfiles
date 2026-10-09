@@ -121,7 +121,9 @@ To make ZSH your default shell, run the following. Note that if you use `sudo`, 
 chsh -s $(which zsh)
 ```
 
-ZSH expects that the following plugins are cloned to `~/.zsh/*`.
+Shared config is split into modules under `~/.zsh/`. `.zshrc` sources each module, then an optional host overlay, then plugins. Create `~/.zsh` as a real directory before `stow zsh` (or clone plugins first) so Stow does not fold the whole `.zsh` tree into one symlink; plugins and `extra.zsh` should live beside the stowed modules, not inside the repo.
+
+ZSH expects that the following plugins are cloned to `~/.zsh/*` (not stowed):
 
 ```sh
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions
@@ -129,7 +131,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-sy
 git clone https://github.com/zsh-users/zsh-history-substring-search.git ~/.zsh/zsh-history-substring-search
 ```
 
-It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. Example snippets I put in `extra.zsh` on some machines:
+It also sources `~/.zsh/extra.zsh` for host-specific additional config, aliases, functions, etc. That file is intentionally untracked (same idea as `.gitconfig.local`). If a host needs `GITHUB_TOKEN` in the environment, set it there (for example `export GITHUB_TOKEN=$(gh auth token)`). Example snippets I put in `extra.zsh` on some machines:
 
 Start SSH agent:
 
@@ -155,7 +157,7 @@ brightnessctl --device='platform::kbd_backlight' set 1
 
 Similar to how ZSH sources `~/.zsh/extra.zsh` (which is not committed) for host-specific config, the Git config points to a `~/.gitconfig.local` file for any additional host-specific or sensitive Git config you'd like to apply, such as GPG config. Create this file to use it as it's not committed.
 
-The global config sets `EDITOR=vim`, uses `main` as the default branch, rebases on pull, and includes a global gitignore for editor and OS junk files.
+The global config sets `editor = nvim`, uses `main` as the default branch, rebases on pull, and includes a global gitignore for editor and OS junk files.
 
 ### OpenCode
 
