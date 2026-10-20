@@ -2,8 +2,9 @@ theme = Catppuccin Mocha
 background-opacity = 0.85
 background-blur = 20
 
-# MacOS-specific config
+auto-update = off
+quit-after-last-window-closed = true
+
 macos-option-as-alt = true
 # macos-titlebar-style = native
 # macos-window-buttons = hidden
-auto-update = off
