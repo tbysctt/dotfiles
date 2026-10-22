@@ -3,7 +3,13 @@ alias lazyvim="NVIM_APPNAME=lazyvim nvim"
 alias tf=terraform
 alias cf=codefresh
 alias t=tmux
-alias nf=fastfetch # fastfetch is a much faster neofetch alternative
+
+if (( $+commands[fastfetch] )); then
+    alias nf=fastfetch # fastfetch is a much faster alternative
+elif (( $+commands[neofetch] )); then
+    alias nf=neofetch # Fall back to neofetch
+fi
+
 alias lg=lazygit
 
 alias ssh="TERM=xterm-256color ssh" # Usually remote machines don't understand the "alacritty" TERM type.
