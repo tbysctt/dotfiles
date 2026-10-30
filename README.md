@@ -31,6 +31,17 @@ Note that Stow's default target is actually the parent directory of the current 
 
 ## Important notes about each config
 
+### Ghostty
+
+If Ghostty doesn't include the theme in the bundle, you'll need to install it like so:
+
+```sh
+mkdir -p ~/.config/ghostty/themes
+curl -fL "https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/ghostty/Catppuccin%20Mocha" -o "$HOME/.config/ghostty/themes/Catppuccin Mocha"
+```
+
+> It seems to be included by default in the bundle on MacOS, but not when installing on Fedora (via Terra).
+
 ### Neovim
 
 A modern configuration of Neovim, requiring at least 0.12.x as it uses the new built-in `vim.pack` package manager.
