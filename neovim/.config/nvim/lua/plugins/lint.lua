@@ -6,7 +6,6 @@ vim.filetype.add({
 
 require("lint").linters_by_ft = {
 	dockerfile = { "hadolint" },
-	lua = { "selene" },
 	sh = { "shellcheck" },
 	bash = { "shellcheck" },
 	go = { "golangcilint" },
