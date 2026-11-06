@@ -58,6 +58,14 @@ vim.lsp.config("eslint", {
 	end,
 })
 
+-- Opt in list for workspace-diagnostics.nvim
+-- yamlls/jsonls/eslint are deliberately excluded. gopls/rust-analyzer already support native workspace diagnostics so they don't need to be included here.
+-- For basedpyright, prefer python.analysis.diagnosticMode = "workspace"
+local workspace_diagnostics_clients = {
+	vtsls = true, -- tsserver has no workspace-wide diagnostic mode
+	intelephense = true,
+}
+
 -- LspAttach so shared logic is not overwritten by per-server on_attach.
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("config.lsp", { clear = true }),
@@ -66,15 +74,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if not client then
 			return
 		end
-		-- Workspace scan is heavy in JS/TS monorepos, buffer diagnostics are enough
-		if client.name == "eslint" or client.name == "biome" or client.name == "gh_actions_ls" then
-			return
-		end
 		local bufnr = event.buf
-		-- some clients support workspace diagnostics natively
+		-- Native pull diagnostics are asyn and cheap. Prefer them when offered.
 		if client:supports_method("workspace/diagnostic", bufnr) then
 			vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
-		else
+		elseif workspace_diagnostics_clients[client.name] then
 			require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 		end
 	end,
