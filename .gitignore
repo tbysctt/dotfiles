@@ -1,1 +1,6 @@
 .DS_Store
+
+# No submodlues for ZSH
+zsh/.zsh/zsh-autosuggestions/
+zsh/.zsh/zsh-history-sub/
+zsh/.zsh/zsh-autosuggestions/
