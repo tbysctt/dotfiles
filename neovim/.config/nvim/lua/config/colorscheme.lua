@@ -1,5 +1,10 @@
 require("catppuccin").setup({
 	flavour = "mocha",
+	transparent_background = true, -- Looks really good when set to true, except for the cursorline.
+	float = {
+		transparent = true,
+		solid = false,
+	},
 	integrations = {
 		native_lsp = {
 			enabled = true,
