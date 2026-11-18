@@ -9,4 +9,4 @@ zstyle ':vcs_info:git:*' stagedstr '+ '
 zstyle ':vcs_info:*:*' check-for-changes true # This enables %u and %c (unstaged/staged changes) to work, but can be slow on large repos
 
 PROMPT='%F{blue}%1~%f ${vcs_info_msg_0_}%# '
-RPROMPT='%(?.%F{green}✓.%F{red}×)%f %n@%m ($(uname -s))'
+RPROMPT='%(?.%F{green}✓.%F{red}×)%f %n@%m [ $(docker context show)]'
