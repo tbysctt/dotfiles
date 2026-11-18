@@ -3,6 +3,7 @@ FZF_CD_IGNORE=(node_modules .git .venv venv __pycache__ dist build target .next 
 function cd_fzf() {
     local search_dir="${1:-.}"
     local max_depth="${2:-}"
+    local query="${*:3}"
     local exclude_args=()
     for pattern in "${FZF_CD_IGNORE[@]}"; do
         exclude_args+=(--exclude "$pattern")
@@ -11,10 +12,19 @@ function cd_fzf() {
     [[ -n "$max_depth" ]] && depth_args=(--max-depth "$max_depth")
 
     local selected_dir
-    selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" |
-        fzf +m --height 50% --preview 'tree -C {}')
+    if [[ -n "$query" ]]; then
+        selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" |
+            fzf --filter "$query" | head -n 1)
+    else
+        selected_dir=$(fd -t d -H "${exclude_args[@]}" "${depth_args[@]}" . "$search_dir" |
+            fzf +m --height 50% --preview 'tree -C {}')
+    fi
+
     if [[ -n "$selected_dir" ]]; then
         cd "$selected_dir" || return 1
+    elif [[ -n "$query" ]]; then
+        echo "cd_fzf: no match found for '$query'" >&2
+        return 1
     fi
 }
 
