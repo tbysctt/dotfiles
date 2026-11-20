@@ -172,49 +172,9 @@ The global config sets `editor = nvim`, uses `main` as the default branch, rebas
 
 ### OpenCode
 
-- Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
-- Shared config lives in `~/.config/opencode/` (stowed): `opencode.jsonc`, `agents/`, `commands/`, `skills/`, etc.
-- Host-specific overlay is always available at `~/.config/opencode-overlay/` (not committed). ZSHRC creates the directory and sets `OPENCODE_CONFIG_DIR` so OpenCode deep-merges it on top of the base config. Overlay _content_ is optional — an empty directory is fine.
+Requires `GITHUB_PERSONAL_ACCESS_TOKEN` for the GitHub MCP server
 
-Layout:
-
-```text
-~/.config/opencode-overlay/
-  opencode.jsonc          # optional host overrides
-  agents/
-  commands/
-  skills/
-```
-
-Add host-specific files anytime, then restart OpenCode (no need to re-source the shell — the env var already points at the overlay directory).
-
-An example overlay `opencode.jsonc`:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "permission": {
-    "external_directory": {
-      "$HOME/work/**": "allow"
-    }
-  },
-  "mcp": {
-    "atlassian": {
-      "enabled": true
-    },
-    "context7": {
-      "enabled": true,
-      "headers": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
-      }
-    }
-  }
-}
-```
-
-Note: if you use a global `AGENTS.md` under `~/.config/opencode/`, setting `OPENCODE_CONFIG_DIR` can make OpenCode look for `AGENTS.md` in the overlay instead (upstream quirk). Put a copy in `~/.config/opencode-overlay/AGENTS.md`, or keep instructions in `agents/` markdown files.
-
-Final config can be verified with `opencode debug config`.
+Final config can be verified with `opencode --standalone debug config`.
 
 ## Notes for new machines
 

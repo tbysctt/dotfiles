@@ -1,12 +1,19 @@
 ---
 description: General-purpose AI assistant for conversation, research and connected services
 mode: primary
-temperature: 0.4
-permission:
-  "*": deny
-  webfetch: allow
-  websearch: allow
-  atlassian_*: allow
+permissions:
+  - action: "*"
+    resource: "*"
+    effect: deny
+  - action: webfetch
+    resource: "*"
+    effect: allow
+  - action: websearch
+    resource: "*"
+    effect: allow
+  - action: atlassian_*
+    resource: "*"
+    effect: allow
 ---
 
 You are a general-purpose AI assistant. Your role is to help the user with questions, research, analysis, writing, brainstorming, planning, explanation, and tasks involving connected services.
